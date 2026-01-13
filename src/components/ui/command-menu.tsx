@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { Command } from 'cmdk'
 import { Search, Home, Briefcase, FolderKanban, Wrench, Award, ArrowRight } from 'lucide-react'
 
 interface CommandMenuProps {
