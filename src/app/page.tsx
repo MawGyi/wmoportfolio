@@ -1,101 +1,191 @@
-import Image from "next/image";
+import { Hero } from '@/components/hero'
+import { ProjectsGrid } from '@/components/projects-grid'
+import { ExperienceTimeline } from '@/components/experience-timeline'
+import { SkillsTools } from '@/components/skills-tools'
+import { Achievements } from '@/components/achievements'
+import { SmoothScroll } from '@/components/smooth-scroll'
+import { SectionWrapper } from '@/components/section-wrapper'
+
+// Win Maw Oo - Professional Profile Data
+// Win Maw Oo - Professional Profile Data
+const profile = {
+  name: 'Win Maw Oo',
+  title: 'Technical Business Analyst',
+  bio: 'With over a decade of technical software development experience, I bridge the gap between business needs and technical execution. I specialize in translating complex problems into clear specifications and delivering user-centric solutions.',
+  status: 'Open to opportunities',
+  statusType: 'available' as const,
+  yearsExperience: 12, // 2012-2024+
+  projectsCompleted: 30, // Estimate based on long tenure
+  clients: 15,
+  socialLinks: [
+    { platform: 'linkedin', url: 'https://www.linkedin.com/in/win-maw-oo-33265560/' },
+    { platform: 'github', url: 'https://github.com/winmawoo' },
+    { platform: 'email', url: 'mailto:winmawoo@example.com' },
+  ],
+}
+
+// Project Highlights from ACE Data Systems
+const projects = [
+  {
+    _id: '1',
+    title: 'Enterprise Governance Platform',
+    description: 'Led requirements analysis and stakeholder alignment for internal governance systems, improving compliance workflows by 40%',
+    tags: ['Business Analysis', 'Stakeholder Management', 'Process Design'],
+    featured: true,
+  },
+  {
+    _id: '2',
+    title: 'ISO/IEC Certification Compliance',
+    description: 'Drove ISO/IEC certification initiatives through gap analysis, process documentation, and cross-functional coordination',
+    tags: ['ISO Standards', 'Documentation', 'Quality Assurance'],
+    featured: false,
+  },
+  {
+    _id: '3',
+    title: 'Digital Transformation Initiative',
+    description: 'Defined product roadmaps and user stories for enterprise digital transformation, enabling agile delivery across departments',
+    tags: ['Agile/Scrum', 'Product Ownership', 'Change Management'],
+    featured: false,
+  },
+  {
+    _id: '4',
+    title: 'Client Solutions Architecture',
+    description: 'Bridged technical and business teams to deliver custom solutions for enterprise clients, from discovery to deployment',
+    tags: ['Solution Design', 'Client Engagement', 'Technical Consulting'],
+    featured: true,
+  },
+]
+
+// Professional Experience Timeline
+// Professional Experience Timeline
+const experience = [
+  {
+    company: 'ACE Data Systems',
+    role: 'Senior Business Analyst & Project Coordinator',
+    startDate: '2017-10',
+    endDate: '2024-10',
+    description: 'Served as functional and project lead for internal systems (ACE IS, Redmine, Bitrix24). Managed end-to-end user support, analyzed business requirements, and monitored project profitability (P&L). Contributed to ISO/IEC 27001:2013 certification audits.',
+  },
+  {
+    company: 'Myanmar Information Technology Pte Ltd',
+    role: 'Software Developer & Functional Consultant',
+    startDate: '2012-07',
+    endDate: '2016-12',
+    description: 'Provided on-site functional consulting for City Mart Holding Co., Ltd including POS and ERP system support. Led system implementation and data migration for new branch openings. Mentored new team members on system functionality.',
+  },
+]
+
+// Skills & Tools Grid
+// Skills & Tools Grid
+const skills = [
+  // Core Business Analysis
+  { name: 'IT Business Analysis', icon: 'layers', category: 'frontend' as const },
+  { name: 'Requirement Elicitation', icon: 'filecode', category: 'frontend' as const },
+  { name: 'User Stories', icon: 'layout', category: 'frontend' as const },
+  { name: 'Stakeholder Management', icon: 'globe', category: 'frontend' as const },
+  { name: 'Process Mapping', icon: 'code', category: 'frontend' as const },
+  
+  // Technical & Systems
+  { name: 'SQL Server', icon: 'database', category: 'backend' as const },
+  { name: 'ERP Systems', icon: 'server', category: 'backend' as const },
+  { name: 'POS Systems', icon: 'smartphone', category: 'backend' as const },
+  { name: 'Data Migration', icon: 'zap', category: 'backend' as const },
+
+  // Tools & Methodologies
+  { name: 'Agile & Scrum', icon: 'zap', category: 'tools' as const },
+  { name: 'JIRA', icon: 'code', category: 'tools' as const },
+  { name: 'Redmine', icon: 'terminal', category: 'tools' as const },
+  { name: 'Bitrix24', icon: 'layout', category: 'tools' as const },
+]
+
+// Education & Certifications
+// Education & Certifications
+const achievements = [
+  {
+    _id: '1',
+    title: '100 Days of DevOps',
+    description: 'KodeKloud - Comprehensive DevOps training and certification',
+    category: 'certification' as const,
+    date: '2025-12',
+  },
+  {
+    _id: '2',
+    title: 'Diploma in Software Engineering',
+    description: 'Cambridge ICT for All (CICT)',
+    category: 'certification' as const,
+  },
+  {
+    _id: '3',
+    title: 'L5 Diploma in Computing',
+    description: 'NCC Education',
+    category: 'certification' as const,
+  },
+  {
+    _id: '4',
+    title: 'ISO/IEC 27001:2013 Audit Contribution',
+    description: 'Contributed to successful certification audits at ACE Data Systems',
+    category: 'milestone' as const,
+    date: '2023-01', // Estimated
+  },
+  {
+    _id: '5',
+    title: '12+ Years Industry Experience',
+    description: 'Decade of progressive growth from developer to technical business analyst',
+    category: 'milestone' as const,
+  },
+]
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <SmoothScroll>
+      <main className="min-h-screen">
+        {/* Hero Section */}
+        <SectionWrapper id="hero">
+          <Hero
+            name={profile.name}
+            title={profile.title}
+            bio={profile.bio}
+            status={profile.status}
+            statusType={profile.statusType}
+            yearsExperience={profile.yearsExperience}
+            projectsCompleted={profile.projectsCompleted}
+            clients={profile.clients}
+            socialLinks={profile.socialLinks}
+          />
+        </SectionWrapper>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+        {/* Projects Section */}
+        <SectionWrapper id="projects">
+          <ProjectsGrid projects={projects} />
+        </SectionWrapper>
+
+        {/* Experience Section */}
+        <SectionWrapper id="experience">
+          <ExperienceTimeline experience={experience} />
+        </SectionWrapper>
+
+        {/* Skills Section */}
+        <SectionWrapper id="skills">
+          <SkillsTools skills={skills} />
+        </SectionWrapper>
+
+        {/* Education & Achievements Section */}
+        <SectionWrapper id="achievements">
+          <Achievements achievements={achievements} />
+        </SectionWrapper>
+
+        {/* Footer */}
+        <footer className="py-12 px-4 md:px-8 border-t border-border">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-muted-foreground text-sm">
+              © {new Date().getFullYear()} {profile.name}. Based in Bangkok.
+            </p>
+            <p className="text-muted-foreground text-xs mt-2">
+              Bridging Business & Technology
+            </p>
+          </div>
+        </footer>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    </SmoothScroll>
+  )
 }

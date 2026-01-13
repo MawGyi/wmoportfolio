@@ -1,0 +1,168 @@
+'use client'
+
+import * as React from 'react'
+import { Moon, Sun, Search, Menu, X } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { CommandMenu } from '@/components/ui/command-menu'
+
+export function Header() {
+  const { theme, setTheme } = useTheme()
+  const [open, setOpen] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
+  const [scrolled, setScrolled] = React.useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+    
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const navItems = [
+    { label: 'Home', href: '#hero' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Experience', href: '#experience' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'Achievements', href: '#achievements' },
+  ]
+
+  return (
+    <>
+      <header 
+        className={`
+          fixed top-0 left-0 right-0 z-40 
+          transition-all duration-300 ease-out
+          ${scrolled 
+            ? 'py-3 bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm' 
+            : 'py-6 bg-transparent'
+          }
+        `}
+      >
+        <div className="max-w-3xl mx-auto px-4 md:px-0 flex items-center justify-between">
+          {/* Left: Logo/Title */}
+          <div className="flex flex-col">
+            <a 
+              href="/" 
+              className="flex items-center gap-2 group"
+            >
+              <div className="relative w-8 h-8">
+                {/* Default: Kung Fu Panda */}
+                <img 
+                  src="/kungfupanda-logo.png" 
+                  alt="Kung Fu Panda Logo" 
+                  className="absolute inset-0 w-8 h-8 rounded-full transition-all duration-300 opacity-100 group-hover:opacity-0 group-hover:scale-90"
+                />
+                {/* Hover: Kung Fu Salute */}
+                <img 
+                  src="/kungfu-salute.png" 
+                  alt="Kung Fu Salute" 
+                  className="absolute inset-0 w-8 h-8 rounded-full transition-all duration-300 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100"
+                />
+              </div>
+              <span className="font-bold text-lg relative">
+                Win Maw Oo
+                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </span>
+            </a>
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-1 mt-1.5 text-sm">
+              {navItems.map((item, index) => (
+                <React.Fragment key={item.href}>
+                  {index > 0 && (
+                    <span className="mx-1 text-muted-foreground/50">|</span>
+                  )}
+                  <a 
+                    href={item.href} 
+                    className="nav-link text-muted-foreground hover:text-primary transition-colors duration-200"
+                  >
+                    {item.label}
+                  </a>
+                </React.Fragment>
+              ))}
+            </nav>
+          </div>
+
+          {/* Right: Controls */}
+          <div className="flex items-center gap-1">
+            {/* Search Button */}
+            <button
+              onClick={() => setOpen(true)}
+              className="icon-btn p-2 rounded-lg hover:bg-muted transition-colors duration-200"
+              aria-label="Search (⌘K)"
+              title="Search (⌘K)"
+            >
+              <Search className="h-5 w-5" />
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+              className="icon-btn p-2 rounded-lg hover:bg-muted transition-colors duration-200"
+              aria-label="Toggle theme"
+            >
+              {mounted && (
+                <span className="relative block h-5 w-5">
+                  <Sun className={`h-5 w-5 absolute inset-0 transition-all duration-300 ${
+                    theme === 'dark' 
+                      ? 'rotate-0 scale-100 opacity-100' 
+                      : 'rotate-90 scale-0 opacity-0'
+                  }`} />
+                  <Moon className={`h-5 w-5 absolute inset-0 transition-all duration-300 ${
+                    theme === 'dark' 
+                      ? '-rotate-90 scale-0 opacity-0' 
+                      : 'rotate-0 scale-100 opacity-100'
+                  }`} />
+                </span>
+              )}
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden icon-btn p-2 rounded-lg hover:bg-muted transition-colors duration-200"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div 
+          className={`
+            md:hidden overflow-hidden transition-all duration-300 ease-out
+            ${mobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}
+          `}
+        >
+          <nav className="px-4 py-4 flex flex-col gap-2 border-t border-border/50 mt-3 bg-background/95 backdrop-blur-lg">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 px-3 rounded-lg text-muted-foreground hover:text-primary hover:bg-muted/50 transition-all duration-200"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* Spacer for fixed header */}
+      <div className="h-20" />
+
+      <CommandMenu open={open} setOpen={setOpen} />
+    </>
+  )
+}

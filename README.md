@@ -1,36 +1,144 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🚀 Win Maw Oo — Portfolio
 
-First, run the development server:
+**Technical Business Analyst | Bridging Business & Technology**
+
+[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+
+[**Live Demo**](https://winmawoo.vercel.app) · [**LinkedIn**](https://www.linkedin.com/in/win-maw-oo-33265560/) · [**GitHub**](https://github.com/winmawoo)
+
+</div>
+
+---
+
+## ✨ Features
+
+- **Modern Design** — Clean, minimal aesthetic with Electric Blue accent theme
+- **Dark/Light Mode** — System-aware theme switching with smooth transitions
+- **Command Palette** — Quick navigation with `⌘K` keyboard shortcut
+- **Responsive** — Mobile-first design that looks great on all devices
+- **Fast** — Static generation with Next.js for blazing performance
+- **Accessible** — Semantic HTML and keyboard navigation support
+- **Animations** — Subtle micro-animations powered by Framer Motion
+
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|----------|-------------|
+| **Framework** | Next.js 14 (App Router) |
+| **Language** | TypeScript |
+| **Styling** | Tailwind CSS, CSS Variables |
+| **UI Components** | Radix UI, Lucide Icons |
+| **Animations** | Framer Motion |
+| **Theme** | next-themes |
+| **Search** | cmdk |
+| **CMS** | Sanity (optional) |
+| **Deployment** | Vercel |
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18.17+
+- npm, yarn, or pnpm
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/winmawoo/wmo_portfolio.git
+cd wmo_portfolio
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+wmo_portfolio/
+├── public/              # Static assets
+├── src/
+│   ├── app/             # Next.js App Router pages
+│   │   ├── globals.css  # Global styles & theme variables
+│   │   ├── layout.tsx   # Root layout with providers
+│   │   └── page.tsx     # Main portfolio page & data
+│   ├── components/      # React components
+│   │   ├── ui/          # Base UI components
+│   │   ├── header.tsx   # Navigation header
+│   │   ├── hero.tsx     # Hero section
+│   │   └── ...          # Other sections
+│   └── lib/             # Utilities & configurations
+├── sanity/              # Sanity CMS configuration (optional)
+└── tailwind.config.ts   # Tailwind configuration
+```
 
-## Learn More
+## 🎨 Customization
 
-To learn more about Next.js, take a look at the following resources:
+### Update Profile Data
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Edit the profile data directly in `src/app/page.tsx`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```typescript
+const profile = {
+  name: 'Your Name',
+  title: 'Your Title',
+  bio: 'Your bio...',
+  socialLinks: [...],
+}
+```
 
-## Deploy on Vercel
+### Change Theme Colors
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Modify CSS variables in `src/app/globals.css`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```css
+:root {
+  --primary: 217 91% 60%;  /* Electric Blue */
+}
+```
+
+## 📜 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
+
+## 🚢 Deployment
+
+Deploy instantly with Vercel:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/winmawoo/wmo_portfolio)
+
+Or build manually:
+
+```bash
+npm run build
+npm run start
+```
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+
+**Built with ❤️ by Win Maw Oo**
+
+*Based in Bangkok | Bridging Business & Technology*
+
+</div>
