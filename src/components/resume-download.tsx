@@ -43,7 +43,7 @@ export function ResumeDownload({ className, variant = 'outline' }: ResumeDownloa
         document={<ResumePDF />}
         fileName="Win_Maw_Oo_Resume.pdf"
       >
-        {({ blob, url, loading, error }) => (
+        {({ loading }) => (
           <Button
             variant={variant}
             size="lg"

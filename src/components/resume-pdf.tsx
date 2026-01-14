@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, Image, Link, Font } from '@react-pdf/renderer'
+import { Document, Page, Text, View, StyleSheet, Image, Font } from '@react-pdf/renderer'
 import { profile, experience, skills, achievements } from '@/data/resume-data'
 
 // Register fonts
@@ -201,6 +201,7 @@ export const ResumePDF = () => (
       <View style={styles.leftSidebar}>
         {/* Profile Photo */}
         <View style={styles.photoContainer}>
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image 
             src="/profile.jpg"
             style={styles.photo} 
