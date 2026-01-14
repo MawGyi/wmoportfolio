@@ -1,7 +1,6 @@
 'use client'
 
-import { forwardRef } from 'react'
-import Image from 'next/image'
+import { forwardRef, useState, useEffect } from 'react'
 
 interface ResumeTemplateProps {
   className?: string
@@ -9,6 +8,26 @@ interface ResumeTemplateProps {
 
 export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
   ({ className }, ref) => {
+    const [imageLoaded, setImageLoaded] = useState(false)
+    const [imageError, setImageError] = useState(false)
+    
+    // Get the absolute URL for the profile image
+    const getProfileImageUrl = () => {
+      if (typeof window !== 'undefined') {
+        return `${window.location.origin}/profile.jpg`
+      }
+      return '/profile.jpg'
+    }
+    
+    useEffect(() => {
+      // Preload the image
+      const img = new window.Image()
+      img.crossOrigin = 'anonymous'
+      img.onload = () => setImageLoaded(true)
+      img.onerror = () => setImageError(true)
+      img.src = getProfileImageUrl()
+    }, [])
+    
     return (
       <div
         ref={ref}
@@ -36,15 +55,29 @@ export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
               overflow: 'hidden',
               flexShrink: 0,
               position: 'relative',
+              backgroundColor: imageError ? '#2563eb' : '#f3f4f6',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <Image
-              src="/profile.jpg"
-              alt="Win Maw Oo"
-              fill
-              style={{ objectFit: 'cover' }}
-              unoptimized
-            />
+            {!imageError ? (
+              <img
+                src={getProfileImageUrl()}
+                alt="Win Maw Oo"
+                crossOrigin="anonymous"
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover',
+                  display: imageLoaded ? 'block' : 'none'
+                }}
+                onLoad={() => setImageLoaded(true)}
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              <span style={{ color: '#ffffff', fontSize: '32px', fontWeight: 700 }}>WO</span>
+            )}
           </div>
 
           {/* Name & Contact */}

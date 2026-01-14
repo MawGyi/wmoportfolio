@@ -23,52 +23,66 @@ export function ResumeDownload({ className, variant = 'outline' }: ResumeDownloa
     setIsGenerating(true)
 
     try {
-      // Wait for images to load
-      const images = resumeRef.current.getElementsByTagName('img')
-      await Promise.all(
-        Array.from(images).map((img) => {
-          if (img.complete) return Promise.resolve()
-          return new Promise((resolve) => {
-            img.onload = resolve
-            img.onerror = resolve
-          })
-        })
-      )
-
-      // Capture the resume template as canvas
-      const canvas = await html2canvas(resumeRef.current, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as Parameters<typeof html2canvas>[1])
-
-      // Create PDF (A4 size: 210mm x 297mm)
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4',
+      // Create a timeout promise to prevent infinite loading
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('PDF generation timed out')), 15000)
       })
+      
+      // Wait for images to load with timeout
+      const images = resumeRef.current.getElementsByTagName('img')
+      const imageLoadPromises = Array.from(images).map((img) => {
+        if (img.complete) return Promise.resolve()
+        return new Promise<void>((resolve) => {
+          const timeout = setTimeout(resolve, 3000) // 3 second timeout per image
+          img.onload = () => { clearTimeout(timeout); resolve() }
+          img.onerror = () => { clearTimeout(timeout); resolve() }
+        })
+      })
+      
+      await Promise.all(imageLoadPromises)
+      
+      // Small delay to ensure rendering is complete
+      await new Promise(resolve => setTimeout(resolve, 500))
 
-      const imgData = canvas.toDataURL('image/png')
-      const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = pdf.internal.pageSize.getHeight()
+      // Capture the resume template as canvas with a race against timeout
+      const generatePDF = async () => {
+        const canvas = await html2canvas(resumeRef.current!, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          imageTimeout: 5000, // 5 second timeout for images in html2canvas
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as Parameters<typeof html2canvas>[1])
 
-      // Calculate image dimensions to fit A4
-      const imgWidth = canvas.width
-      const imgHeight = canvas.height
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight)
-      const scaledWidth = imgWidth * ratio
-      const scaledHeight = imgHeight * ratio
+        // Create PDF (A4 size: 210mm x 297mm)
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4',
+        })
 
-      // Center the image
-      const x = (pdfWidth - scaledWidth) / 2
-      const y = 0
+        const imgData = canvas.toDataURL('image/png')
+        const pdfWidth = pdf.internal.pageSize.getWidth()
+        const pdfHeight = pdf.internal.pageSize.getHeight()
 
-      pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight)
-      pdf.save('Win_Maw_Oo_Resume.pdf')
+        // Calculate image dimensions to fit A4
+        const imgWidth = canvas.width
+        const imgHeight = canvas.height
+        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight)
+        const scaledWidth = imgWidth * ratio
+        const scaledHeight = imgHeight * ratio
+
+        // Center the image
+        const x = (pdfWidth - scaledWidth) / 2
+        const y = 0
+
+        pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight)
+        pdf.save('Win_Maw_Oo_Resume.pdf')
+      }
+      
+      await Promise.race([generatePDF(), timeoutPromise])
 
       // Track download event
       console.log('Resume downloaded successfully')
