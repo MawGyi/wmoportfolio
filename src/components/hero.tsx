@@ -2,8 +2,13 @@
 
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react'
-import { ResumeDownload } from './resume-download'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
+
+// Dynamically import ResumeDownload to avoid SSR issues with @react-pdf/renderer
+const ResumeDownload = dynamic(() => import('./resume-download').then(mod => mod.ResumeDownload), {
+  ssr: false,
+})
 
 interface SocialLink {
   platform: string

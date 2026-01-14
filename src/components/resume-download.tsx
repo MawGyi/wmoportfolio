@@ -3,10 +3,9 @@
 import { Button } from '@/components/ui/button'
 import { Download, Loader2 } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useState, useRef } from 'react'
-import { ResumeTemplate } from './resume-template'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import { useEffect, useState } from 'react'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import { ResumePDF } from './resume-pdf'
 
 interface ResumeDownloadProps {
   className?: string
@@ -14,125 +13,60 @@ interface ResumeDownloadProps {
 }
 
 export function ResumeDownload({ className, variant = 'outline' }: ResumeDownloadProps) {
-  const [isGenerating, setIsGenerating] = useState(false)
-  const resumeRef = useRef<HTMLDivElement>(null)
+  const [isClient, setIsClient] = useState(false)
 
-  const handleDownload = async () => {
-    if (!resumeRef.current || isGenerating) return
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
-    setIsGenerating(true)
-
-    try {
-      // Create a timeout promise to prevent infinite loading
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('PDF generation timed out')), 15000)
-      })
-      
-      // Wait for images to load with timeout
-      const images = resumeRef.current.getElementsByTagName('img')
-      const imageLoadPromises = Array.from(images).map((img) => {
-        if (img.complete) return Promise.resolve()
-        return new Promise<void>((resolve) => {
-          const timeout = setTimeout(resolve, 3000) // 3 second timeout per image
-          img.onload = () => { clearTimeout(timeout); resolve() }
-          img.onerror = () => { clearTimeout(timeout); resolve() }
-        })
-      })
-      
-      await Promise.all(imageLoadPromises)
-      
-      // Small delay to ensure rendering is complete
-      await new Promise(resolve => setTimeout(resolve, 500))
-
-      // Capture the resume template as canvas with a race against timeout
-      const generatePDF = async () => {
-        const canvas = await html2canvas(resumeRef.current!, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#ffffff',
-          logging: false,
-          imageTimeout: 5000, // 5 second timeout for images in html2canvas
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as Parameters<typeof html2canvas>[1])
-
-        // Create PDF (A4 size: 210mm x 297mm)
-        const pdf = new jsPDF({
-          orientation: 'portrait',
-          unit: 'mm',
-          format: 'a4',
-        })
-
-        const imgData = canvas.toDataURL('image/png')
-        const pdfWidth = pdf.internal.pageSize.getWidth()
-        const pdfHeight = pdf.internal.pageSize.getHeight()
-
-        // Calculate image dimensions to fit A4
-        const imgWidth = canvas.width
-        const imgHeight = canvas.height
-        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight)
-        const scaledWidth = imgWidth * ratio
-        const scaledHeight = imgHeight * ratio
-
-        // Center the image
-        const x = (pdfWidth - scaledWidth) / 2
-        const y = 0
-
-        pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight)
-        pdf.save('Win_Maw_Oo_Resume.pdf')
-      }
-      
-      await Promise.race([generatePDF(), timeoutPromise])
-
-      // Track download event
-      console.log('Resume downloaded successfully')
-    } catch (error) {
-      console.error('Error generating PDF:', error)
-      alert('Failed to generate resume. Please try again.')
-    } finally {
-      setIsGenerating(false)
-    }
+  if (!isClient) {
+    return (
+      <Button
+        variant={variant}
+        size="lg"
+        className="gap-2 border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-colors"
+        disabled
+      >
+        <Loader2 className="w-4 h-4 animate-spin" />
+        Loading PDF...
+      </Button>
+    )
   }
 
   return (
-    <>
-      {/* Hidden resume template for PDF generation */}
-      <div
-        style={{
-          position: 'absolute',
-          left: '-9999px',
-          top: 0,
-          zIndex: -1,
-        }}
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className={className}
+    >
+      <PDFDownloadLink
+        document={<ResumePDF />}
+        fileName="Win_Maw_Oo_Resume.pdf"
       >
-        <ResumeTemplate ref={resumeRef} />
-      </div>
-
-      <motion.div
-        whileHover={{ scale: isGenerating ? 1 : 1.05 }}
-        whileTap={{ scale: isGenerating ? 1 : 0.95 }}
-        className={className}
-      >
-        <Button
-          variant={variant}
-          size="lg"
-          className="gap-2 border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-colors"
-          onClick={handleDownload}
-          disabled={isGenerating}
-        >
-          {isGenerating ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            <>
-              <Download className="w-4 h-4" />
-              Download Resume
-            </>
-          )}
-        </Button>
-      </motion.div>
-    </>
+        {({ blob, url, loading, error }) => (
+          <Button
+            variant={variant}
+            size="lg"
+            className="gap-2 border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-colors"
+            disabled={loading}
+            asChild
+          >
+            <span style={{ pointerEvents: 'none' }}>
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Download className="w-4 h-4" />
+                  Download Resume
+                </>
+              )}
+            </span>
+          </Button>
+        )}
+      </PDFDownloadLink>
+    </motion.div>
   )
 }
