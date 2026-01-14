@@ -46,21 +46,21 @@ function formatDate(dateString: string): string {
 
 export function ExperienceTimeline({ experience = defaultExperience }: ExperienceTimelineProps) {
   return (
-    <section className="py-12">
-      <h2 className="text-2xl font-bold mb-8">Experience</h2>
-      <div className="space-y-8">
+    <section className="py-16">
+      <h2 className="section-heading">Experience</h2>
+      <div className="space-y-10">
         {experience.map((exp, index) => (
-          <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-6">
-            <div className="sm:w-32 flex-shrink-0">
-               <span className="text-sm text-muted-foreground font-mono">
-                  {formatDate(exp.startDate)} - {exp.current ? 'Present' : exp.endDate ? formatDate(exp.endDate) : ''}
+          <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-8">
+            <div className="sm:w-36 flex-shrink-0">
+               <span className="text-micro text-muted-foreground font-mono">
+                  {formatDate(exp.startDate)} – {exp.current ? 'Present' : exp.endDate ? formatDate(exp.endDate) : ''}
                </span>
             </div>
             <div>
-              <h3 className="text-lg font-semibold">{exp.company}</h3>
-              <p className="text-accent text-sm mb-2">{exp.role}</p>
+              <h3 className="text-title">{exp.company}</h3>
+              <p className="text-caption text-accent mb-2">{exp.role}</p>
               {exp.description && (
-                <p className="text-muted-foreground text-sm max-w-xl">
+                <p className="text-caption text-muted-foreground max-w-xl">
                   {exp.description}
                 </p>
               )}

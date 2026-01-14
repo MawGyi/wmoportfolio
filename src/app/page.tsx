@@ -19,8 +19,8 @@ const profile = {
   clients: 15,
   socialLinks: [
     { platform: 'linkedin', url: 'https://www.linkedin.com/in/win-maw-oo-33265560/' },
-    { platform: 'github', url: 'https://github.com/winmawoo' },
-    { platform: 'email', url: 'mailto:winmawoo@example.com' },
+    { platform: 'github', url: 'https://github.com/MawGyi' },
+    { platform: 'email', url: 'mailto:winmawoo89@gmail.com' },
   ],
 }
 
@@ -79,23 +79,26 @@ const experience = [
 // Skills & Tools Grid
 const skills = [
   // Core Business Analysis
-  { name: 'IT Business Analysis', icon: 'layers', category: 'frontend' as const },
-  { name: 'Requirement Elicitation', icon: 'filecode', category: 'frontend' as const },
-  { name: 'User Stories', icon: 'layout', category: 'frontend' as const },
-  { name: 'Stakeholder Management', icon: 'globe', category: 'frontend' as const },
-  { name: 'Process Mapping', icon: 'code', category: 'frontend' as const },
+  { name: 'IT Business Analysis', category: 'business' as const },
+  { name: 'Requirement Elicitation', category: 'business' as const },
+  { name: 'User Stories', category: 'business' as const },
+  { name: 'Stakeholder Management', category: 'business' as const },
+  { name: 'Process Mapping', category: 'business' as const },
   
   // Technical & Systems
-  { name: 'SQL Server', icon: 'database', category: 'backend' as const },
-  { name: 'ERP Systems', icon: 'server', category: 'backend' as const },
-  { name: 'POS Systems', icon: 'smartphone', category: 'backend' as const },
-  { name: 'Data Migration', icon: 'zap', category: 'backend' as const },
+  { name: 'SQL Server', category: 'technical' as const },
+  { name: 'ERP Systems', category: 'technical' as const },
+  { name: 'POS Systems', category: 'technical' as const },
+  { name: 'Data Migration', category: 'technical' as const },
 
-  // Tools & Methodologies
-  { name: 'Agile & Scrum', icon: 'zap', category: 'tools' as const },
-  { name: 'JIRA', icon: 'code', category: 'tools' as const },
-  { name: 'Redmine', icon: 'terminal', category: 'tools' as const },
-  { name: 'Bitrix24', icon: 'layout', category: 'tools' as const },
+  // Methodologies
+  { name: 'Agile & Scrum', category: 'methodology' as const },
+  { name: 'ISO 27001', category: 'methodology' as const },
+  
+  // Tools & Platforms
+  { name: 'JIRA', category: 'tools' as const },
+  { name: 'Redmine', category: 'tools' as const },
+  { name: 'Bitrix24', category: 'tools' as const },
 ]
 
 // Education & Certifications
@@ -175,12 +178,12 @@ export default function Home() {
         </SectionWrapper>
 
         {/* Footer */}
-        <footer className="py-12 px-4 md:px-8 border-t border-border">
+        <footer className="py-16 px-4 md:px-8 border-t border-border">
           <div className="max-w-6xl mx-auto text-center">
-            <p className="text-muted-foreground text-sm">
+            <p className="text-caption text-muted-foreground">
               © {new Date().getFullYear()} {profile.name}. Based in Bangkok.
             </p>
-            <p className="text-muted-foreground text-xs mt-2">
+            <p className="text-micro text-muted-foreground mt-2">
               Bridging Business & Technology
             </p>
           </div>

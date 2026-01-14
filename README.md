@@ -1,47 +1,88 @@
-# Win Maw Oo — Portfolio
+# Win Maw Oo — Portfolio 🚀
 
-Hey there! 👋 This is my personal portfolio website where I showcase my work as a Technical Business Analyst.
+Hey there! 👋 This is my personal portfolio website where I showcase my work as a **Technical Business Analyst** with 12+ years in the tech industry.
 
-## About This Project
+![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-After 12+ years in the tech industry, I wanted a clean space to highlight my journey — from software development to business analysis. Built with Next.js and styled with that sleek dark mode aesthetic we all love.
+## ✨ Features
 
-## What's Inside
+- **📄 Resume Download** — Generate and download a professional PDF resume
+- **🎨 Dark/Light Mode** — Seamless theme switching with next-themes
+- **⚡ Smooth Animations** — Powered by Framer Motion
+- **🔍 Command Palette** — Quick search with cmdk
+- **📱 Fully Responsive** — Looks great on all devices
 
-- **Projects** — Real work I've done at ACE Data Systems and beyond
-- **Experience** — My career timeline from developer to BA
-- **Skills** — Tools and methodologies I work with daily
-- **Certifications** — Including my recent KodeKloud DevOps cert 🎉
+## 🗂 What's Inside
 
-## Tech I Used
+| Section | Description |
+|---------|-------------|
+| **Hero** | Personal intro with profile picture and social links |
+| **Experience** | Career timeline from developer to BA |
+| **Projects** | Real work I've done at ACE Data Systems |
+| **Skills** | Business methods, technical systems, and tools |
+| **Achievements** | Certifications including KodeKloud DevOps 🎉 |
 
-- Next.js 14 with App Router
-- TypeScript
-- Tailwind CSS
-- Framer Motion for smooth animations
-- Dark/Light mode with next-themes
+## 🛠 Tech Stack
 
-## Run It Locally
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion
+- **PDF Generation:** jsPDF + html2canvas
+- **Theming:** next-themes
+- **Search:** cmdk (Command Menu)
+
+## 🚀 Quick Start
 
 ```bash
+# Clone the repo
 git clone https://github.com/MawGyi/wmoportfolio.git
+
+# Navigate to project
 cd wmoportfolio
+
+# Install dependencies
 npm install
+
+# Start dev server
 npm run dev
 ```
 
-Then open [localhost:3000](http://localhost:3000) and you're good to go.
+Open [http://localhost:3000](http://localhost:3000) and you're good to go!
 
-## Deploy Your Own
+## 📦 Scripts
 
-Hit the button below to deploy on Vercel:
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
+
+## 🎨 Customization
+
+All content is centralized:
+- **Content Data:** `src/app/page.tsx` — Update experience, projects, skills
+- **Styling:** `src/app/globals.css` — Tweak colors and theme
+- **Components:** `src/components/` — Modular, reusable components
+
+## 🌐 Deploy on Vercel
+
+One-click deploy:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/MawGyi/wmoportfolio)
 
-## Want to Customize?
+## 📸 Screenshots
 
-All the content lives in `src/app/page.tsx` — just update the data objects there and you're set. Colors can be tweaked in `src/app/globals.css`.
+*Coming soon!*
+
+## 📝 License
+
+MIT © [Win Maw Oo](https://github.com/MawGyi)
 
 ---
 
-Built with ☕ and late nights in Bangkok.
+Built with ☕ and late nights in Bangkok 🇹🇭

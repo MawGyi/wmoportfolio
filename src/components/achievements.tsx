@@ -62,8 +62,8 @@ function formatDate(dateString: string): string {
 
 export function Achievements({ achievements = defaultAchievements }: AchievementsProps) {
   return (
-    <section className="py-12">
-      <h2 className="text-2xl font-bold mb-8">Certifications & Milestones</h2>
+    <section className="py-16">
+      <h2 className="section-heading">Certifications & Milestones</h2>
       
       <div className="grid gap-4 sm:grid-cols-2">
         {achievements.map((achievement, index) => {
@@ -84,7 +84,7 @@ export function Achievements({ achievements = defaultAchievements }: Achievement
               {/* Category Badge */}
               <div className="flex items-center justify-between mb-3">
                 <span className={`
-                  inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+                  text-micro inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
                   ${config.bgColor} ${config.color}
                 `}>
                   <Icon className="w-3.5 h-3.5" />
@@ -92,7 +92,7 @@ export function Achievements({ achievements = defaultAchievements }: Achievement
                 </span>
                 
                 {achievement.date && (
-                  <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                  <span className="text-micro inline-flex items-center gap-1 text-muted-foreground">
                     <Calendar className="w-3 h-3" />
                     {formatDate(achievement.date)}
                   </span>
@@ -100,13 +100,13 @@ export function Achievements({ achievements = defaultAchievements }: Achievement
               </div>
               
               {/* Title */}
-              <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+              <h3 className="text-title text-foreground mb-2 group-hover:text-primary transition-colors">
                 {achievement.title}
               </h3>
               
               {/* Description */}
               {achievement.description && (
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-caption text-muted-foreground">
                   {achievement.description}
                 </p>
               )}

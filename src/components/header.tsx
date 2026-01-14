@@ -50,23 +50,15 @@ export function Header() {
               href="/" 
               className="flex items-center gap-2 group"
             >
-              <div className="relative w-8 h-8">
-                {/* Default: Kung Fu Panda */}
+              <div className="w-8 h-8">
                 <img 
-                  src="/kungfupanda-logo.png" 
-                  alt="Kung Fu Panda Logo" 
-                  className="absolute inset-0 w-8 h-8 rounded-full transition-all duration-300 opacity-100 group-hover:opacity-0 group-hover:scale-90"
-                />
-                {/* Hover: Kung Fu Salute */}
-                <img 
-                  src="/kungfu-salute.png" 
-                  alt="Kung Fu Salute" 
-                  className="absolute inset-0 w-8 h-8 rounded-full transition-all duration-300 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100"
+                  src="/kungfupanda-color.png" 
+                  alt="Logo" 
+                  className="w-8 h-8 rounded-full grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </div>
-              <span className="font-bold text-lg relative">
-                Win Maw Oo
-                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              <span className="font-semibold text-sm font-mono">
+                Win Maw Oo <span className="font-normal">(Technical Business Analyst)</span>
               </span>
             </a>
             

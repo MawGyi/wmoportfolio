@@ -12,50 +12,86 @@
 
 @layer base {
   :root {
-    /* Professional Light Mode - Electric Blue */
+    /* Professional Light Mode - Red Accent */
     --background: 0 0% 98%;
     --foreground: 220 10% 18%;
     --card: 0 0% 100%;
     --card-foreground: 220 10% 18%;
     --popover: 0 0% 100%;
     --popover-foreground: 220 10% 18%;
-    --primary: 217 91% 60%;
+    --primary: 0 72% 51%;
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 96%;
     --secondary-foreground: 220 10% 18%;
     --muted: 0 0% 96%;
     --muted-foreground: 220 8% 46%;
-    --accent: 217 91% 60%;
+    --accent: 0 72% 51%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 220 10% 88%;
     --input: 220 10% 80%;
-    --ring: 217 91% 60%;
+    --ring: 0 72% 51%;
     --radius: 0.5rem;
+
+    /* Typography Scale - Minimalist (matching saturngod.net) */
+    --font-size-xs: 0.75rem;
+    /* 12px */
+    --font-size-sm: 0.875rem;
+    /* 14px - body text, nav links */
+    --font-size-base: 0.875rem;
+    /* 14px */
+    --font-size-md: 1rem;
+    /* 16px */
+    --font-size-lg: 1.125rem;
+    /* 18px */
+    --font-size-xl: 1.25rem;
+    /* 20px - h2 sections */
+    --font-size-2xl: 1.5rem;
+    /* 24px - h1 main heading */
+    --font-size-3xl: 1.75rem;
+    /* 28px */
+    --font-size-4xl: 2rem;
+    /* 32px */
+    --font-size-5xl: 2.25rem;
+    /* 36px */
+
+    /* Line Heights */
+    --line-height-tight: 1.1;
+    --line-height-snug: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.625;
+    --line-height-loose: 1.75;
+
+    /* Letter Spacing */
+    --tracking-tighter: -0.05em;
+    --tracking-tight: -0.025em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.025em;
+    --tracking-wider: 0.05em;
   }
 
   .dark {
-    /* Professional Dark Mode - Electric Blue */
+    /* Professional Dark Mode - Green Accent */
     --background: 220 10% 10%;
     --foreground: 0 0% 88%;
     --card: 220 10% 12%;
     --card-foreground: 0 0% 88%;
     --popover: 220 10% 12%;
     --popover-foreground: 0 0% 88%;
-    --primary: 217 91% 60%;
+    --primary: 142 71% 45%;
     --primary-foreground: 0 0% 100%;
     --secondary: 220 10% 16%;
     --secondary-foreground: 0 0% 88%;
     --muted: 220 10% 16%;
     --muted-foreground: 0 0% 60%;
-    --accent: 217 91% 60%;
+    --accent: 142 71% 45%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 220 10% 22%;
     --input: 220 10% 22%;
-    --ring: 217 91% 60%;
+    --ring: 142 71% 45%;
   }
 }
 
@@ -164,6 +200,62 @@
     }
   }
 
+  /* Shimmer animation for skill bars */
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Slow spin animation for profile ring */
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Conic gradient for rotating border */
+  .bg-gradient-conic {
+    background: conic-gradient(from 0deg, var(--tw-gradient-stops));
+  }
+
+  .animate-tilt {
+    animation: tilt 10s infinite linear;
+  }
+
+  @keyframes tilt {
+
+    0%,
+    50%,
+    100% {
+      transform: rotate(0deg);
+    }
+
+    25% {
+      transform: rotate(1deg);
+    }
+
+    75% {
+      transform: rotate(-1deg);
+    }
+  }
+
   /* Glow effect */
   .glow-primary {
     box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
@@ -241,22 +333,112 @@
   }
 }
 
+/* --- Typography Utilities --- */
+@layer utilities {
+
+  /* Display headings - Hero & major titles (24px like saturngod) */
+  .text-display {
+    font-size: var(--font-size-2xl);
+    line-height: 1.33;
+    letter-spacing: normal;
+    font-weight: 600;
+  }
+
+  .text-display-sm {
+    font-size: var(--font-size-xl);
+    line-height: 1.4;
+    letter-spacing: normal;
+    font-weight: 600;
+  }
+
+  /* Section headings (20px like saturngod h2) */
+  .text-section {
+    font-size: var(--font-size-xl);
+    line-height: 1.4;
+    letter-spacing: normal;
+    font-weight: 600;
+  }
+
+  /* Subheadings */
+  .text-heading {
+    font-size: var(--font-size-lg);
+    line-height: 1.4;
+    letter-spacing: normal;
+    font-weight: 600;
+  }
+
+  /* Card titles */
+  .text-title {
+    font-size: var(--font-size-md);
+    line-height: 1.4;
+    letter-spacing: normal;
+    font-weight: 600;
+  }
+
+  /* Body text - default (14px like saturngod) */
+  .text-body {
+    font-size: var(--font-size-sm);
+    line-height: 1.43;
+    letter-spacing: normal;
+    font-weight: 400;
+  }
+
+  /* Body large - intro/lead paragraphs */
+  .text-body-lg {
+    font-size: var(--font-size-base);
+    line-height: 1.43;
+    letter-spacing: normal;
+    font-weight: 400;
+  }
+
+  /* Small text - captions, labels */
+  .text-caption {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--tracking-wide);
+    font-weight: 400;
+  }
+
+  /* Extra small - badges, metadata */
+  .text-micro {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--tracking-wider);
+    font-weight: 500;
+  }
+
+  /* Accent text - job titles, dates */
+  .text-accent-style {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    letter-spacing: var(--tracking-wide);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+}
+
 /* --- Component-specific styles --- */
 @layer components {
 
-  /* Section heading style */
+  /* Section heading style (20px like saturngod h2) */
   .section-heading {
-    @apply text-2xl font-bold mb-8 relative inline-block;
+    font-size: var(--font-size-xl);
+    line-height: 1.4;
+    letter-spacing: normal;
+    font-weight: 600;
+    @apply mb-8 relative inline-block;
   }
 
   .section-heading::after {
     content: '';
-    @apply absolute -bottom-2 left-0 w-12 h-1 bg-primary rounded-full;
+    @apply absolute -bottom-2 left-0 w-10 h-0.5 bg-primary rounded-full;
   }
 
   /* Tag/badge style */
   .tag {
-    @apply inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium;
+    font-size: var(--font-size-xs);
+    letter-spacing: var(--tracking-wide);
+    @apply inline-flex items-center px-2.5 py-1 rounded-md font-medium;
     @apply bg-muted text-muted-foreground;
     @apply transition-colors duration-200;
   }
