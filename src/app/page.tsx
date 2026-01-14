@@ -91,9 +91,9 @@ const skills = [
   { name: 'POS Systems', category: 'technical' as const },
   { name: 'Data Migration', category: 'technical' as const },
 
-  // Methodologies
-  { name: 'Agile & Scrum', category: 'methodology' as const },
-  { name: 'ISO 27001', category: 'methodology' as const },
+  // Methodologies (included in Business & Methods)
+  { name: 'Agile & Scrum', category: 'business' as const },
+  { name: 'ISO 27001', category: 'business' as const },
   
   // Tools & Platforms
   { name: 'JIRA', category: 'tools' as const },

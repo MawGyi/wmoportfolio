@@ -37,12 +37,13 @@ export function ResumeDownload({ className, variant = 'outline' }: ResumeDownloa
 
       // Capture the resume template as canvas
       const canvas = await html2canvas(resumeRef.current, {
-        scale: 2, // Higher quality
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
-      } as any)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as Parameters<typeof html2canvas>[1])
 
       // Create PDF (A4 size: 210mm x 297mm)
       const pdf = new jsPDF({

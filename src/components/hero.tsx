@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, ExternalLink, ArrowRight } from 'lucide-react'
+import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react'
 import { ResumeDownload } from './resume-download'
 import Image from 'next/image'
 
@@ -23,11 +23,7 @@ interface HeroProps {
   profileImage?: string
 }
 
-const socialIcons: Record<string, React.ComponentType<{ className?: string }>> = {
-  github: Github,
-  linkedin: Linkedin,
-  email: Mail,
-}
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -60,11 +56,9 @@ const imageVariants = {
 
 export function Hero({
   name = 'Win Maw Oo',
-  title = 'Technical Business Analyst',
   bio = 'With over a decade of technical software development experience, I bridge the gap between business needs and technical execution. I specialize in translating complex problems into clear specifications and delivering user-centric solutions.',
   status = 'Open to opportunities',
   statusType = 'available',
-  socialLinks = [],
   profileImage = '/profile.jpg',
 }: HeroProps) {
   const statusColors = {

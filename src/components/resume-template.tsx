@@ -1,6 +1,7 @@
 'use client'
 
 import { forwardRef } from 'react'
+import Image from 'next/image'
 
 interface ResumeTemplateProps {
   className?: string
@@ -34,13 +35,15 @@ export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
               border: '3px solid #2563eb',
               overflow: 'hidden',
               flexShrink: 0,
+              position: 'relative',
             }}
           >
-            <img
+            <Image
               src="/profile.jpg"
               alt="Win Maw Oo"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              crossOrigin="anonymous"
+              fill
+              style={{ objectFit: 'cover' }}
+              unoptimized
             />
           </div>
 

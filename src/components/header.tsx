@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import Image from 'next/image'
 import { Moon, Sun, Search, Menu, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { CommandMenu } from '@/components/ui/command-menu'
@@ -50,11 +51,13 @@ export function Header() {
               href="/" 
               className="flex items-center gap-2 group"
             >
-              <div className="w-8 h-8">
-                <img 
+              <div className="w-8 h-8 relative">
+                <Image 
                   src="/kungfupanda-color.png" 
                   alt="Logo" 
-                  className="w-8 h-8 rounded-full grayscale group-hover:grayscale-0 transition-all duration-300"
+                  fill
+                  className="rounded-full grayscale group-hover:grayscale-0 transition-all duration-300 object-cover"
+                  unoptimized
                 />
               </div>
               <span className="font-semibold text-sm font-mono">
