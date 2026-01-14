@@ -2,6 +2,7 @@
 
 import { forwardRef, useState, useEffect } from 'react'
 import { profile, experience, skills, achievements } from '@/data/resume-data'
+import { Mail, Linkedin, Github, MapPin } from 'lucide-react'
 
 interface ResumeTemplateProps {
   className?: string
@@ -32,134 +33,86 @@ export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
     return (
       <div
         ref={ref}
-        className={className}
+        className={`bg-white text-slate-800 font-sans shadow-2xl mx-auto overflow-hidden flex ${className || ''}`}
         style={{
           width: '210mm',
+          height: '297mm',
           minHeight: '297mm',
-          backgroundColor: '#ffffff',
-          color: '#1f2937',
-          fontFamily: 'Inter, system-ui, sans-serif',
-          display: 'flex',
-          flexDirection: 'row',
-          overflow: 'hidden',
+          maxHeight: '297mm',
         }}
       >
         {/* Left Sidebar */}
-        <div style={{
-          width: '32%',
-          backgroundColor: '#f8fafc',
-          padding: '24px',
-          borderRight: '1px solid #e2e8f0',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '24px'
-        }}>
+        <div className="w-[32%] bg-slate-50 border-r border-slate-200 flex flex-col p-8 gap-8 shrink-0">
           {/* Profile Photo */}
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            marginBottom: '12px' 
-          }}>
-            <div
-              style={{
-                width: '120px',
-                height: '120px',
-                borderRadius: '50%',
-                border: '4px solid #ffffff',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                overflow: 'hidden',
-                backgroundColor: imageError ? '#2563eb' : '#f3f4f6',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
+          <div className="flex justify-center">
+            <div className="w-32 h-32 rounded-full border-4 border-white shadow-md overflow-hidden bg-slate-200">
               {!imageError ? (
                 <img
                   src={getProfileImageUrl()}
                   alt={profile.name}
                   crossOrigin="anonymous"
-                  style={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    objectFit: 'cover',
-                    display: imageLoaded ? 'block' : 'none'
-                  }}
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                   onLoad={() => setImageLoaded(true)}
                   onError={() => setImageError(true)}
                 />
               ) : (
-                <span style={{ color: '#ffffff', fontSize: '32px', fontWeight: 700 }}>WO</span>
+                <div className="w-full h-full flex items-center justify-center text-slate-400 font-bold text-3xl">
+                  {profile.name.substring(0, 2).toUpperCase()}
+                </div>
               )}
             </div>
           </div>
 
           {/* Contact Info */}
-          <div>
-            <h3 style={{
-              fontSize: '12px',
-              textTransform: 'uppercase',
-              color: '#64748b',
-              letterSpacing: '0.05em',
-              fontWeight: 600,
-              marginBottom: '12px',
-              borderBottom: '1px solid #cbd5e1',
-              paddingBottom: '4px'
-            }}>Contact</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '11px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ color: '#2563eb' }}>📧</span>
-                <span style={{ wordBreak: 'break-all' }}>{profile.email}</span>
+          <div className="space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 border-b border-slate-200 pb-2">
+              Contact
+            </h3>
+            <div className="flex flex-col gap-3 text-[10px] text-slate-600">
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+                  <Mail className="w-3 h-3" />
+                </div>
+                <span className="break-all font-medium">{profile.email}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ color: '#2563eb' }}>�</span>
-                <span>{profile.linkedin}</span>
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+                  <Linkedin className="w-3 h-3" />
+                </div>
+                <span className="font-medium">{profile.linkedin}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ color: '#2563eb' }}>💻</span>
-                <span>{profile.github}</span>
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+                  <Github className="w-3 h-3" />
+                </div>
+                <span className="font-medium">{profile.github}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ color: '#2563eb' }}>📍</span>
-                <span>{profile.location}</span>
+              <div className="flex items-center gap-3">
+                <div className="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+                  <MapPin className="w-3 h-3" />
+                </div>
+                <span className="font-medium">{profile.location}</span>
               </div>
             </div>
           </div>
 
           {/* Skills */}
-          <div>
-            <h3 style={{
-              fontSize: '12px',
-              textTransform: 'uppercase',
-              color: '#64748b',
-              letterSpacing: '0.05em',
-              fontWeight: 600,
-              marginBottom: '12px',
-              borderBottom: '1px solid #cbd5e1',
-              paddingBottom: '4px'
-            }}>Skills</h3>
+          <div className="space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 border-b border-slate-200 pb-2">
+              Skills
+            </h3>
             
-            {/* Group Skills by Category */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="flex flex-col gap-5">
               {['Business & Methods', 'Technical Systems', 'Tools'].map(category => (
                 <div key={category}>
-                  <div style={{ fontSize: '10px', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
+                  <div className="text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wide">
                     {category}
                   </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                  <div className="flex flex-wrap gap-1.5">
                     {skills
                       .filter(s => s.category === category)
                       .map(skill => (
-                      <span key={skill.name} style={{
-                        display: 'inline-block',
-                        padding: '2px 8px',
-                        backgroundColor: '#ffffff',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: '4px',
-                        fontSize: '9px',
-                        color: '#475569',
-                        fontWeight: 500,
-                      }}>
+                      <span key={skill.name} className="px-2 py-1 bg-white border border-slate-200 rounded text-[9px] text-slate-600 font-semibold shadow-sm">
                         {skill.name}
                       </span>
                     ))}
@@ -170,30 +123,23 @@ export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
           </div>
 
           {/* Education */}
-          <div>
-            <h3 style={{
-              fontSize: '12px',
-              textTransform: 'uppercase',
-              color: '#64748b',
-              letterSpacing: '0.05em',
-              fontWeight: 600,
-              marginBottom: '12px',
-              borderBottom: '1px solid #cbd5e1',
-              paddingBottom: '4px'
-            }}>Education</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div className="space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 border-b border-slate-200 pb-2">
+              Education
+            </h3>
+            <div className="flex flex-col gap-4">
               {achievements
                 .filter(a => a.category === 'certification')
                 .map((edu, i) => (
-                <div key={i}>
-                  <div style={{ fontSize: '11px', fontWeight: 600, color: '#1e293b' }}>
+                <div key={i} className="group">
+                  <div className="text-[10px] font-bold text-slate-700 leading-tight mb-1">
                     {edu.title}
                   </div>
-                  <div style={{ fontSize: '10px', color: '#64748b' }}>
+                  <div className="text-[9px] text-slate-500 font-medium">
                     {edu.description}
                   </div>
                   {edu.date && (
-                    <div style={{ fontSize: '10px', color: '#94a3b8', marginTop: '2px' }}>
+                    <div className="text-[9px] text-slate-400 mt-0.5">
                       {edu.date}
                     </div>
                   )}
@@ -204,121 +150,61 @@ export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
         </div>
 
         {/* Main Content */}
-        <div style={{
-          flex: 1,
-          padding: '32px 32px 32px 24px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
+        <div className="flex-1 p-10 flex flex-col gap-8">
           {/* Header */}
-          <div style={{ marginBottom: '24px' }}>
-            <h1 style={{ 
-              fontSize: '32px', 
-              fontWeight: 800, 
-              color: '#0f172a', 
-              margin: '0 0 4px 0', 
-              letterSpacing: '-0.02em',
-              lineHeight: '1.1' 
-            }}>
+          <div>
+            <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight leading-none mb-2">
               {profile.name.toUpperCase()}
             </h1>
-            <p style={{ 
-              fontSize: '16px', 
-              color: '#2563eb', 
-              fontWeight: 500, 
-              margin: 0,
-              letterSpacing: '0.01em'
-            }}>
+            <p className="text-lg text-blue-600 font-semibold tracking-wide flex items-center gap-2">
               {profile.title}
             </p>
           </div>
 
           {/* Professional Summary */}
-          <div style={{ marginBottom: '24px' }}>
-            <h2 style={{
-              fontSize: '14px',
-              fontWeight: 700,
-              color: '#0f172a',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              marginBottom: '10px',
-              borderBottom: '2px solid #2563eb',
-              paddingBottom: '4px',
-              display: 'inline-block'
-            }}>
+          <div>
+            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <span className="w-8 h-1 bg-blue-600 rounded-full"></span>
               Professional Summary
             </h2>
-            <p style={{ 
-              fontSize: '11px', 
-              lineHeight: '1.6', 
-              color: '#334155', 
-              textAlign: 'justify' 
-            }}>
+            <p className="text-[10px] leading-relaxed text-slate-600 text-justify font-medium">
               {profile.bio}
             </p>
           </div>
 
           {/* Work Experience */}
-          <div>
-            <h2 style={{
-              fontSize: '14px',
-              fontWeight: 700,
-              color: '#0f172a',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              marginBottom: '16px',
-              borderBottom: '2px solid #2563eb',
-              paddingBottom: '4px',
-              display: 'inline-block'
-            }}>
+          <div className="flex-1">
+            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6 flex items-center gap-2">
+              <span className="w-8 h-1 bg-blue-600 rounded-full"></span>
               Professional Experience
             </h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div className="flex flex-col gap-6">
               {experience.map((job, idx) => (
-                <div key={idx}>
-                  <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'baseline',
-                    marginBottom: '4px' 
-                  }}>
-                    <h3 style={{ fontSize: '13px', fontWeight: 700, color: '#1e293b', margin: 0 }}>
+                <div key={idx} className="relative pl-4 border-l-2 border-slate-100 last:mb-0">
+                  <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-600 border-2 border-white ring-1 ring-blue-100"></div>
+                  
+                  <div className="flex justify-between items-baseline mb-1">
+                    <h3 className="text-sm font-bold text-slate-800">
                       {job.company}
                     </h3>
-                    <span style={{ fontSize: '11px', color: '#64748b', fontWeight: 500 }}>
+                    <span className="text-[10px] font-semibold text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full">
                       {job.startDate} — {job.endDate}
                     </span>
                   </div>
-                  <div style={{ 
-                    fontSize: '12px', 
-                    color: '#2563eb', 
-                    fontWeight: 600, 
-                    marginBottom: '8px' 
-                  }}>
+                  
+                  <div className="text-xs text-blue-600 font-bold mb-2">
                     {job.role}
                   </div>
                   
-                  {/* Job Description */}
-                  <div style={{ 
-                    fontSize: '11px', 
-                    lineHeight: '1.5', 
-                    color: '#334155',
-                    marginBottom: '6px'
-                  }}>
+                  <div className="text-[10px] leading-relaxed text-slate-600 mb-3 text-justify">
                     {job.description}
                   </div>
                   
-                  {/* Highlights/Bullets */}
-                  <ul style={{ 
-                    margin: '0', 
-                    paddingLeft: '16px', 
-                    fontSize: '11px', 
-                    lineHeight: '1.5',
-                    color: '#475569' 
-                  }}>
+                  <ul className="space-y-1.5">
                     {job.highlights && job.highlights.map((highlight, hIdx) => (
-                      <li key={hIdx} style={{ marginBottom: '2px' }}>
+                      <li key={hIdx} className="text-[10px] text-slate-500 pl-3 relative leading-relaxed">
+                        <span className="absolute left-0 top-1.5 w-1 h-1 bg-slate-300 rounded-full"></span>
                         {highlight}
                       </li>
                     ))}

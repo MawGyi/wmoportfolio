@@ -1,11 +1,10 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Download, Loader2 } from 'lucide-react'
+import { FileText } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import { ResumePDF } from './resume-pdf'
+import { ResumePreviewModal } from './resume-preview-modal'
 
 interface ResumeDownloadProps {
   className?: string
@@ -14,6 +13,7 @@ interface ResumeDownloadProps {
 
 export function ResumeDownload({ className, variant = 'outline' }: ResumeDownloadProps) {
   const [isClient, setIsClient] = useState(false)
+  const [showPreview, setShowPreview] = useState(false)
 
   useEffect(() => {
     setIsClient(true)
@@ -27,46 +27,34 @@ export function ResumeDownload({ className, variant = 'outline' }: ResumeDownloa
         className="gap-2 border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-colors"
         disabled
       >
-        <Loader2 className="w-4 h-4 animate-spin" />
-        Loading PDF...
+        <FileText className="w-4 h-4" />
+        Resume
       </Button>
     )
   }
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className={className}
-    >
-      <PDFDownloadLink
-        document={<ResumePDF />}
-        fileName="Win_Maw_Oo_Resume.pdf"
+    <>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className={className}
       >
-        {({ loading }) => (
-          <Button
-            variant={variant}
-            size="lg"
-            className="gap-2 border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-colors"
-            disabled={loading}
-            asChild
-          >
-            <span style={{ pointerEvents: 'none' }}>
-              {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <Download className="w-4 h-4" />
-                  Download Resume
-                </>
-              )}
-            </span>
-          </Button>
-        )}
-      </PDFDownloadLink>
-    </motion.div>
+        <Button
+          variant={variant}
+          size="lg"
+          onClick={() => setShowPreview(true)}
+          className="gap-2 border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-colors"
+        >
+          <FileText className="w-4 h-4" />
+          View Resume
+        </Button>
+      </motion.div>
+
+      <ResumePreviewModal 
+        isOpen={showPreview} 
+        onClose={() => setShowPreview(false)} 
+      />
+    </>
   )
 }

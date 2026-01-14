@@ -59,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${jetbrainsMono.variable} font-mono antialiased bg-background text-foreground`}>
+      <body className={`${jetbrainsMono.variable} font-mono antialiased bg-background text-foreground`} suppressHydrationWarning>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
