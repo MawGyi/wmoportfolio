@@ -206,10 +206,10 @@ export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
                   <span
                     key={skill}
                     style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      display: 'inline-block',
+                      textAlign: 'center',
                       height: '26px',
+                      lineHeight: '24px',
                       padding: '0 14px',
                       backgroundColor: '#eff6ff',
                       border: '1px solid #bfdbfe',
@@ -262,10 +262,10 @@ export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
                   <span
                     key={skill}
                     style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      display: 'inline-block',
+                      textAlign: 'center',
                       height: '26px',
+                      lineHeight: '24px',
                       padding: '0 14px',
                       backgroundColor: '#f0fdf4',
                       border: '1px solid #bbf7d0',
@@ -317,10 +317,10 @@ export const ResumeTemplate = forwardRef<HTMLDivElement, ResumeTemplateProps>(
                   <span
                     key={skill}
                     style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      display: 'inline-block',
+                      textAlign: 'center',
                       height: '26px',
+                      lineHeight: '24px',
                       padding: '0 14px',
                       backgroundColor: '#faf5ff',
                       border: '1px solid #e9d5ff',
