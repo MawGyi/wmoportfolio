@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Image, Font } from '@react-pdf/renderer'
-import { profile, experience, skills, achievements } from '@/data/resume-data'
+import { profile, experience, skills, achievements, projects } from '@/data/resume-data'
 
 // Register fonts
 Font.register({
@@ -15,126 +15,27 @@ Font.register({
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     backgroundColor: '#FFFFFF',
     fontFamily: 'Inter',
     fontSize: 9,
-    padding: 0,
+    padding: 40,
     color: '#1e293b', // slate-800
   },
-  leftSidebar: {
-    width: '32%',
-    height: '100%',
-    backgroundColor: '#f8fafc', // slate-50
-    padding: 24,
-    borderRight: '1px solid #e2e8f0', // slate-200
-    flexDirection: 'column',
-    gap: 20,
-  },
-  mainContent: {
-    width: '68%',
-    padding: 40,
-    paddingRight: 32,
-    flexDirection: 'column',
-    gap: 24,
-  },
-  // Sidebar Components
-  photoContainer: {
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  photo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    objectFit: 'cover',
-    border: '4px solid #ffffff',
-    backgroundColor: '#e2e8f0',
-  },
-  sidebarSection: {
-    marginBottom: 4,
-  },
-  sidebarTitle: {
-    fontSize: 8,
-    fontFamily: 'Inter',
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    color: '#94a3b8', // slate-400
-    letterSpacing: 2,
+  // Header
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
     borderBottom: '1px solid #e2e8f0',
-    paddingBottom: 4,
-    marginBottom: 8,
+    paddingBottom: 16,
   },
-  contactItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-    gap: 8,
-  },
-  contactLabelIcon: {
-    padding: 4,
-    backgroundColor: '#eff6ff', // blue-50
-    borderRadius: 4,
-  },
-  contactText: {
-    fontSize: 8,
-    color: '#475569', // slate-600
-    fontWeight: 500,
+  headerLeft: {
     flex: 1,
-  },
-  // Skills
-  skillCategory: {
-    marginBottom: 8,
-  },
-  skillCategoryTitle: {
-    fontSize: 7,
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    color: '#64748b', // slate-500
-    marginBottom: 4,
-  },
-  skillPillsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 4,
-  },
-  skillPill: {
-    padding: '2px 6px',
-    backgroundColor: '#ffffff',
-    border: '1px solid #e2e8f0',
-    borderRadius: 3,
-    fontSize: 7,
-    color: '#475569',
-    fontWeight: 600,
-  },
-  // Education
-  eduContainer: {
-    marginBottom: 10,
-  },
-  eduTitle: {
-    fontSize: 8,
-    fontWeight: 700,
-    color: '#334155', // slate-700
-    lineHeight: 1.2,
-  },
-  eduDesc: {
-    fontSize: 7,
-    color: '#64748b',
-    marginTop: 1,
-    fontWeight: 500,
-  },
-  eduDate: {
-    fontSize: 7,
-    color: '#94a3b8',
-    marginTop: 2,
-  },
-
-  // Main Content Components
-  header: {
-    marginBottom: 10,
+    paddingRight: 20,
   },
   name: {
-    fontSize: 32, // Large name
+    fontSize: 24,
     fontWeight: 800,
     color: '#0f172a', // slate-900
     marginBottom: 4,
@@ -142,217 +43,306 @@ const styles = StyleSheet.create({
     letterSpacing: -0.5,
   },
   title: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#2563eb', // blue-600
     fontWeight: 600,
-    letterSpacing: 0.5,
+    marginBottom: 8,
   },
-  sectionTitleMainWrapper: {
+  contactRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
-    gap: 8,
+    gap: 4,
   },
-  sectionTitleIndicator: {
-    width: 24,
-    height: 3,
-    backgroundColor: '#2563eb',
-    borderRadius: 2,
+  contactText: {
+    fontSize: 8,
+    color: '#475569', // slate-600
   },
-  sectionTitleMain: {
+  headerPhoto: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    objectFit: 'cover',
+  },
+
+  // Sections
+  section: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
     fontSize: 10,
     fontWeight: 700,
     color: '#0f172a',
     textTransform: 'uppercase',
     letterSpacing: 1,
+    borderBottom: '1px solid #f1f5f9',
+    paddingBottom: 4,
+    marginBottom: 8,
   },
+
+  // Content
   summaryText: {
     fontSize: 9,
-    lineHeight: 1.6,
-    color: '#475569', // slate-600
+    lineHeight: 1.5,
+    color: '#334155',
     textAlign: 'justify',
-    fontWeight: 500,
   },
+
+  // Skills
+  skillRow: {
+    flexDirection: 'row',
+    marginBottom: 4,
+    alignItems: 'flex-start',
+  },
+  skillCategory: {
+    width: 100,
+    fontSize: 9,
+    fontWeight: 700,
+    color: '#0f172a',
+  },
+  skillList: {
+    flex: 1,
+    fontSize: 9,
+    color: '#334155',
+    lineHeight: 1.4,
+  },
+
   // Experience
   jobContainer: {
-    marginBottom: 16,
-    paddingLeft: 12,
-    borderLeft: '1px solid #f1f5f9', // slate-100 (thinner border than html)
-    position: 'relative',
-  },
-  jobDot: {
-    position: 'absolute',
-    left: -4,
-    top: 4,
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    backgroundColor: '#2563eb',
-    border: '2px solid #ffffff',
+    marginBottom: 10,
   },
   jobHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'baseline',
+    alignItems: 'center',
     marginBottom: 2,
   },
   companyName: {
     fontSize: 10,
     fontWeight: 700,
-    color: '#1e293b',
+    color: '#0f172a',
   },
-  jobDatePill: {
-    fontSize: 7,
-    color: '#94a3b8', // slate-400
-    backgroundColor: '#f8fafc',
-    padding: '2px 6px',
-    borderRadius: 8,
-    fontWeight: 600,
+  jobDate: {
+    fontSize: 8,
+    color: '#64748b',
+    fontWeight: 500,
   },
   jobRole: {
     fontSize: 9,
-    color: '#2563eb',
-    fontWeight: 700,
-    marginBottom: 6,
+    color: '#2563eb', // blue-700
+    fontWeight: 600,
+    marginBottom: 4,
   },
   jobDescription: {
-    fontSize: 8,
-    lineHeight: 1.5,
-    color: '#475569',
-    marginBottom: 6,
+    fontSize: 8.5,
+    lineHeight: 1.4,
+    color: '#334155',
+    marginBottom: 4,
     textAlign: 'justify',
   },
   bulletPoint: {
     flexDirection: 'row',
-    marginBottom: 3,
-    paddingLeft: 8,
+    marginBottom: 2,
+    paddingLeft: 4,
   },
   bulletDot: {
-    width: 3,
-    height: 3,
-    backgroundColor: '#cbd5e1', // slate-300
-    borderRadius: 1.5,
+    width: 2,
+    height: 2,
+    backgroundColor: '#64748b',
+    borderRadius: 1,
     marginTop: 4,
     marginRight: 6,
   },
   bulletText: {
     fontSize: 8,
-    lineHeight: 1.5,
-    color: '#64748b', // slate-500
+    color: '#475569',
+    lineHeight: 1.4,
     flex: 1,
+  },
+
+  // Projects
+  projectContainer: {
+    marginBottom: 8,
+  },
+  projectHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: 2,
+  },
+  projectTitle: {
+    fontSize: 9,
+    fontWeight: 700,
+    color: '#0f172a',
+  },
+  projectTags: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+  projectTag: {
+    fontSize: 7,
+    backgroundColor: '#f1f5f9',
+    padding: '2px 4px',
+    borderRadius: 2,
+    color: '#64748b',
+  },
+  projectDesc: {
+    fontSize: 8,
+    color: '#475569',
+    lineHeight: 1.4,
+  },
+
+  // Education
+  eduRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  eduMain: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  eduTitle: {
+    fontSize: 9,
+    fontWeight: 700,
+    color: '#1e293b',
+  },
+  eduPipe: {
+    fontSize: 9,
+    color: '#94a3b8', 
+    marginHorizontal: 4,
+  },
+  eduDesc: {
+    fontSize: 9,
+    color: '#475569',
+  },
+  eduDate: {
+    fontSize: 8,
+    color: '#94a3b8',
   },
 })
 
 export const ResumePDF = () => (
   <Document>
     <Page size="A4" style={styles.page}>
-      {/* Left Sidebar */}
-      <View style={styles.leftSidebar}>
-        {/* Profile Photo */}
-        <View style={styles.photoContainer}>
-          {/* eslint-disable-next-line jsx-a11y/alt-text */}
-          <Image 
-            src="/profile.jpg"
-            style={styles.photo} 
-          />
-        </View>
-
-        {/* Contact info - simulating icons with colored squares or layout as react-pdf needs paths/images */}
-        <View style={styles.sidebarSection}>
-          <Text style={styles.sidebarTitle}>Contact</Text>
-          <View style={styles.contactItem}>
-            <Text style={styles.contactText}>{profile.email}</Text>
-          </View>
-          <View style={styles.contactItem}>
-            <Text style={styles.contactText}>{profile.linkedin}</Text>
-          </View>
-          <View style={styles.contactItem}>
-            <Text style={styles.contactText}>{profile.github}</Text>
-          </View>
-          <View style={styles.contactItem}>
-            <Text style={styles.contactText}>{profile.location}</Text>
-          </View>
-        </View>
-
-        {/* Skills */}
-        <View style={styles.sidebarSection}>
-          <Text style={styles.sidebarTitle}>Skills</Text>
-          {['Business & Methods', 'Technical Systems', 'Tools'].map(category => (
-            <View key={category} style={styles.skillCategory} wrap={false}>
-              <Text style={styles.skillCategoryTitle}>{category}</Text>
-              <View style={styles.skillPillsContainer}>
-                {skills
-                  .filter(s => s.category === category)
-                  .map(skill => (
-                    <Text key={skill.name} style={styles.skillPill}>
-                      {skill.name}
-                    </Text>
-                  ))}
-              </View>
-            </View>
-          ))}
-        </View>
-
-        {/* Education */}
-        <View style={styles.sidebarSection}>
-          <Text style={styles.sidebarTitle}>Education</Text>
-          {achievements
-            .filter(a => a.category === 'certification')
-            .map((edu, i) => (
-              <View key={i} style={styles.eduContainer}>
-                <Text style={styles.eduTitle}>{edu.title}</Text>
-                <Text style={styles.eduDesc}>{edu.description}</Text>
-                {edu.date && <Text style={styles.eduDate}>{edu.date}</Text>}
-              </View>
-            ))}
-        </View>
-      </View>
-
-      {/* Main Content */}
-      <View style={styles.mainContent}>
-        <View style={styles.header}>
+      
+      {/* Header */}
+      <View style={styles.headerContainer}>
+        <View style={styles.headerLeft}>
           <Text style={styles.name}>{profile.name}</Text>
           <Text style={styles.title}>{profile.title}</Text>
-        </View>
-
-        <View style={{ marginBottom: 24 }}>
-          <View style={styles.sectionTitleMainWrapper}>
-            <View style={styles.sectionTitleIndicator} />
-            <Text style={styles.sectionTitleMain}>Professional Summary</Text>
-          </View>
-          <Text style={styles.summaryText}>{profile.bio}</Text>
-        </View>
-
-        <View>
-          <View style={styles.sectionTitleMainWrapper}>
-            <View style={styles.sectionTitleIndicator} />
-            <Text style={styles.sectionTitleMain}>Professional Experience</Text>
-          </View>
           
-          <View style={{ gap: 10 }}>
-            {experience.map((job, idx) => (
-              <View key={idx} style={styles.jobContainer} wrap={false}>
-                <View style={styles.jobDot} />
-                <View style={styles.jobHeader}>
-                  <Text style={styles.companyName}>{job.company}</Text>
-                  <Text style={styles.jobDatePill}>{job.startDate} — {job.endDate}</Text>
-                </View>
-                <Text style={styles.jobRole}>{job.role}</Text>
-                <Text style={styles.jobDescription}>{job.description}</Text>
-                
-                <View>
-                  {job.highlights && job.highlights.map((highlight, hIdx) => (
-                    <View key={hIdx} style={styles.bulletPoint}>
-                      <View style={styles.bulletDot} />
-                      <Text style={styles.bulletText}>{highlight}</Text>
+          <View style={styles.contactRow}>
+            <View style={styles.contactItem}>
+               <Text style={styles.contactText}>{profile.email}</Text>
+            </View>
+            <View style={styles.contactItem}>
+               <Text style={styles.contactText}>{profile.phone}</Text>
+            </View>
+            <View style={styles.contactItem}>
+               <Text style={styles.contactText}>{profile.location}</Text>
+            </View>
+            <View style={styles.contactItem}>
+               <Text style={styles.contactText}>github.com/MawGyi</Text>
+            </View>
+             <View style={styles.contactItem}>
+               <Text style={styles.contactText}>linkedin.com/in/win-maw-oo</Text>
+            </View>
+          </View>
+        </View>
+        
+        {/* Photo (Optional/Small) */}
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        <Image 
+            src="/profile.jpg"
+            style={styles.headerPhoto} 
+        />
+      </View>
+
+      {/* Summary */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Professional Summary</Text>
+        <Text style={styles.summaryText}>{profile.bio}</Text>
+      </View>
+
+      {/* Skills */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Technical Skills</Text>
+        {['Business & Methods', 'Technical Systems', 'Tools'].map(category => {
+            const categorySkills = skills.filter(s => s.category === category)
+            if (categorySkills.length === 0) return null
+            return (
+              <View key={category} style={styles.skillRow} wrap={false}>
+                <Text style={styles.skillCategory}>{category}:</Text>
+                <Text style={styles.skillList}>
+                  {categorySkills.map(s => s.name).join(', ')}
+                </Text>
+              </View>
+            )
+        })}
+      </View>
+
+      {/* Experience */}
+      <View style={{ ...styles.section, flex: 1 }}>
+         <Text style={styles.sectionTitle}>Work Experience</Text>
+         {experience.map((job, idx) => (
+            <View key={idx} style={styles.jobContainer} wrap={false}>
+              <View style={styles.jobHeader}>
+                <Text style={styles.companyName}>{job.company}</Text>
+                <Text style={styles.jobDate}>{job.startDate} — {job.endDate}</Text>
+              </View>
+              <Text style={styles.jobRole}>{job.role}</Text>
+              <Text style={styles.jobDescription}>{job.description}</Text>
+              
+              <View>
+                {job.highlights && job.highlights.slice(0, 3).map((highlight, hIdx) => (
+                  <View key={hIdx} style={styles.bulletPoint}>
+                    <View style={styles.bulletDot} />
+                    <Text style={styles.bulletText}>{highlight}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+         ))}
+      </View>
+
+      {/* Projects */}
+      <View style={styles.section} wrap={false}>
+          <Text style={styles.sectionTitle}>Key Projects</Text>
+           {projects.filter(p => p.featured).slice(0, 2).map((project) => (
+              <View key={project.title} style={styles.projectContainer}>
+                 <View style={styles.projectHeader}>
+                    <Text style={styles.projectTitle}>{project.title}</Text>
+                    <View style={styles.projectTags}>
+                       {project.tags.slice(0, 3).map(tag => (
+                         <Text key={tag} style={styles.projectTag}>{tag}</Text>
+                       ))}
                     </View>
-                  ))}
-                </View>
+                 </View>
+                 <Text style={styles.projectDesc}>{project.description}</Text>
               </View>
             ))}
-          </View>
-        </View>
       </View>
+
+      {/* Education */}
+      <View style={styles.section} wrap={false}>
+         <Text style={styles.sectionTitle}>Education</Text>
+         {achievements.filter(a => a.category === 'certification').slice(0, 3).map((edu, i) => (
+           <View key={i} style={styles.eduRow}>
+             <View style={styles.eduMain}>
+               <Text style={styles.eduTitle}>{edu.title}</Text>
+               <Text style={styles.eduPipe}>|</Text>
+               <Text style={styles.eduDesc}>{edu.description}</Text>
+             </View>
+             {edu.date && <Text style={styles.eduDate}>{edu.date}</Text>}
+           </View>
+         ))}
+      </View>
+
     </Page>
   </Document>
 )
