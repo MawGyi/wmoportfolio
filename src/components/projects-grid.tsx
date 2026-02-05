@@ -96,13 +96,6 @@ export function ProjectsGrid({ projects = defaultProjects }: ProjectsGridProps) 
               hover:bg-muted/30 hover:shadow-lg hover:shadow-primary/5
               focus-within:bg-muted/30 focus-within:shadow-lg focus-within:shadow-primary/5
               border border-transparent hover:border-border/50 focus-within:border-border/50">
-              
-              {/* Featured badge */}
-              {project.featured && (
-                <span className="absolute top-4 right-4 text-micro text-primary bg-primary/10 px-2 py-1 rounded-full">
-                  Featured
-                </span>
-              )}
 
               <div className="flex flex-col sm:flex-row justify-between sm:items-baseline gap-2 mb-3">
                 <h3 className="text-title group-hover:text-accent transition-colors duration-300">
