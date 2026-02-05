@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Moon, Sun, Search, Menu, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { CommandMenu } from '@/components/ui/command-menu'
+import { useActiveSection } from '@/hooks/use-active-section'
 
 export function Header() {
   const { theme, setTheme } = useTheme()
@@ -12,6 +13,7 @@ export function Header() {
   const [mounted, setMounted] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  const activeSection = useActiveSection()
 
   React.useEffect(() => {
     setMounted(true)
@@ -25,11 +27,11 @@ export function Header() {
   }, [])
 
   const navItems = [
-    { label: 'Home', href: '#hero' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Achievements', href: '#achievements' },
+    { label: 'Home', href: '#hero', id: 'hero' },
+    { label: 'Projects', href: '#projects', id: 'projects' },
+    { label: 'Experience', href: '#experience', id: 'experience' },
+    { label: 'Skills', href: '#skills', id: 'skills' },
+    { label: 'Achievements', href: '#achievements', id: 'achievements' },
   ]
 
   return (
@@ -74,7 +76,11 @@ export function Header() {
                   )}
                   <a 
                     href={item.href} 
-                    className="nav-link text-muted-foreground hover:text-primary transition-colors duration-200"
+                    className={`nav-link transition-colors duration-200 ${
+                      activeSection === item.id 
+                        ? 'text-primary font-medium' 
+                        : 'text-muted-foreground hover:text-primary'
+                    }`}
                   >
                     {item.label}
                   </a>
@@ -145,7 +151,11 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 px-3 rounded-lg text-muted-foreground hover:text-primary hover:bg-muted/50 transition-all duration-200"
+                className={`py-2 px-3 rounded-lg transition-all duration-200 ${
+                  activeSection === item.id
+                    ? 'text-primary bg-primary/10 font-medium'
+                    : 'text-muted-foreground hover:text-primary hover:bg-muted/50'
+                }`}
               >
                 {item.label}
               </a>

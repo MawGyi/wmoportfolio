@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ErrorBoundary } from "@/components/error-boundary";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { BackToTop } from "@/components/back-to-top";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -75,8 +77,10 @@ export default function RootLayout({
         >
           <ErrorBoundary>
             <div className="relative z-10">
+              <ScrollProgress />
               <Header />
               {children}
+              <BackToTop />
             </div>
           </ErrorBoundary>
         </ThemeProvider>

@@ -18,7 +18,15 @@ const navigationItems = [
 
 export function CommandMenu({ open, setOpen }: CommandMenuProps) {
   const [search, setSearch] = React.useState('')
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
   const inputRef = React.useRef<HTMLInputElement>(null)
+  const itemRefs = React.useRef<(HTMLButtonElement | null)[]>([])
+
+  const filteredItems = navigationItems.filter(
+    (item) =>
+      item.label.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase())
+  )
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -35,21 +43,64 @@ export function CommandMenu({ open, setOpen }: CommandMenuProps) {
   React.useEffect(() => {
     if (open) {
       setSearch('')
+      setSelectedIndex(0)
       // Focus input after animation
       setTimeout(() => inputRef.current?.focus(), 100)
     }
   }, [open])
 
-  const handleNavigate = (href: string) => {
+  // Reset selection when search changes
+  React.useEffect(() => {
+    setSelectedIndex(0)
+  }, [search])
+
+  const handleNavigate = React.useCallback((href: string) => {
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
     setOpen(false)
-  }
+  }, [setOpen])
 
-  const filteredItems = navigationItems.filter(
-    (item) =>
-      item.label.toLowerCase().includes(search.toLowerCase()) ||
-      item.description.toLowerCase().includes(search.toLowerCase())
-  )
+  // Handle keyboard navigation
+  React.useEffect(() => {
+    if (!open) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (filteredItems.length === 0) return
+
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault()
+          setSelectedIndex((prev) => 
+            prev < filteredItems.length - 1 ? prev + 1 : prev
+          )
+          break
+        case 'ArrowUp':
+          e.preventDefault()
+          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : prev))
+          break
+        case 'Enter':
+          e.preventDefault()
+          if (filteredItems[selectedIndex]) {
+            handleNavigate(filteredItems[selectedIndex].href)
+          }
+          break
+        case 'Escape':
+          e.preventDefault()
+          setOpen(false)
+          break
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [open, filteredItems, selectedIndex, setOpen, handleNavigate])
+
+  // Scroll selected item into view
+  React.useEffect(() => {
+    const selectedItem = itemRefs.current[selectedIndex]
+    if (selectedItem) {
+      selectedItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    }
+  }, [selectedIndex])
 
   if (!open) return null
 
@@ -94,21 +145,31 @@ export function CommandMenu({ open, setOpen }: CommandMenuProps) {
               <p className="px-3 py-1.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Navigate to
               </p>
-              {filteredItems.map((item) => {
+              {filteredItems.map((item, index) => {
                 const Icon = item.icon
+                const isSelected = index === selectedIndex
                 return (
                   <button
                     key={item.href}
+                    ref={(el) => { itemRefs.current[index] = el }}
                     onClick={() => handleNavigate(item.href)}
-                    className="
+                    onMouseEnter={() => setSelectedIndex(index)}
+                    className={`
                       w-full flex items-center gap-3 px-3 py-3 rounded-lg
                       text-left transition-all duration-200
-                      hover:bg-primary/10 hover:text-primary
-                      focus:bg-primary/10 focus:text-primary focus:outline-none
+                      focus:outline-none
                       group
-                    "
+                      ${isSelected 
+                        ? 'bg-primary/10 text-primary' 
+                        : 'hover:bg-primary/10 hover:text-primary'
+                      }
+                    `}
                   >
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted group-hover:bg-primary/20 transition-colors">
+                    <div className={`
+                      flex items-center justify-center w-10 h-10 rounded-lg 
+                      ${isSelected ? 'bg-primary/20' : 'bg-muted group-hover:bg-primary/20'}
+                      transition-colors
+                    `}>
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -117,7 +178,13 @@ export function CommandMenu({ open, setOpen }: CommandMenuProps) {
                         {item.description}
                       </p>
                     </div>
-                    <ArrowRight className="h-4 w-4 text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    <ArrowRight className={`
+                      h-4 w-4 transition-all
+                      ${isSelected 
+                        ? 'text-primary opacity-100 translate-x-0' 
+                        : 'text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
+                      }
+                    `} />
                   </button>
                 )
               })}
@@ -128,9 +195,14 @@ export function CommandMenu({ open, setOpen }: CommandMenuProps) {
         {/* Footer */}
         <div className="px-4 py-3 border-t border-border bg-muted/30">
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>
-              Press <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">↵</kbd> to select
-            </span>
+            <div className="flex items-center gap-3">
+              <span>
+                <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">↑↓</kbd> to navigate
+              </span>
+              <span>
+                <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">↵</kbd> to select
+              </span>
+            </div>
             <span>
               <kbd className="px-1.5 py-0.5 rounded bg-muted border border-border font-mono">⌘K</kbd> to toggle
             </span>
