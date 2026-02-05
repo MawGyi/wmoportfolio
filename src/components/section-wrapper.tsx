@@ -1,25 +1,50 @@
 'use client'
 
 import { ReactNode } from 'react'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 
 interface SectionWrapperProps {
   children: ReactNode
   visible?: boolean
   id?: string
   fullBleed?: boolean
+  delay?: number
 }
 
-export function SectionWrapper({ children, visible = true, id, fullBleed = false }: SectionWrapperProps) {
+const sectionVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+}
+
+export function SectionWrapper({ 
+  children, 
+  visible = true, 
+  id, 
+  fullBleed = false,
+  delay = 0 
+}: SectionWrapperProps) {
   if (!visible) return null
 
   return (
-    <motion.div
+    <motion.section
       id={id}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.6 }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+      variants={sectionVariants}
+      transition={{ delay }}
       className="w-full"
     >
       {fullBleed ? (
@@ -29,6 +54,22 @@ export function SectionWrapper({ children, visible = true, id, fullBleed = false
           {children}
         </div>
       )}
-    </motion.div>
+    </motion.section>
   )
+}
+
+// Child animation variant for use within sections
+export const sectionChildVariants: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
+  },
 }
