@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -72,10 +73,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative z-10">
-            <Header />
-            {children}
-          </div>
+          <ErrorBoundary>
+            <div className="relative z-10">
+              <Header />
+              {children}
+            </div>
+          </ErrorBoundary>
         </ThemeProvider>
       </body>
     </html>
