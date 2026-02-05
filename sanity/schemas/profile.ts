@@ -119,9 +119,8 @@ export default {
                             type: 'string',
                             options: {
                                 list: [
-                                    { title: 'Frontend', value: 'frontend' },
-                                    { title: 'Backend', value: 'backend' },
-                                    { title: 'Design', value: 'design' },
+                                    { title: 'Business & Methods', value: 'business' },
+                                    { title: 'Technical Systems', value: 'technical' },
                                     { title: 'Tools', value: 'tools' },
                                 ],
                             },

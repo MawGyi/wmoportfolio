@@ -7,9 +7,10 @@ interface SectionWrapperProps {
   children: ReactNode
   visible?: boolean
   id?: string
+  fullBleed?: boolean
 }
 
-export function SectionWrapper({ children, visible = true, id }: SectionWrapperProps) {
+export function SectionWrapper({ children, visible = true, id, fullBleed = false }: SectionWrapperProps) {
   if (!visible) return null
 
   return (
@@ -21,9 +22,13 @@ export function SectionWrapper({ children, visible = true, id }: SectionWrapperP
       transition={{ duration: 0.6 }}
       className="w-full"
     >
-      <div className="max-w-3xl mx-auto px-4 md:px-0">
-        {children}
-      </div>
+      {fullBleed ? (
+        children
+      ) : (
+        <div className="max-w-3xl mx-auto px-4 md:px-0">
+          {children}
+        </div>
+      )}
     </motion.div>
   )
 }

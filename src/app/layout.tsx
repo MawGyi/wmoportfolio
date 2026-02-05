@@ -59,15 +59,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${jetbrainsMono.variable} font-mono antialiased bg-background text-foreground`} suppressHydrationWarning>
+      <body className={`${jetbrainsMono.variable} relative font-mono antialiased bg-background text-foreground`} suppressHydrationWarning>
+        <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+          <div className="hero-astro-bg" />
+          <div className="hero-nebula" />
+          <div className="hero-starfield" />
+        </div>
+
         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-          <Header />
-          {children}
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="relative z-10">
+            <Header />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>

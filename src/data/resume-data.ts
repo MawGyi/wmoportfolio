@@ -1,13 +1,13 @@
 
 export const profile = {
     name: 'Win Maw Oo',
-    title: 'Technical Business Analyst & Product Owner',
-    bio: 'With over 12 years of experience bridging the gap between business needs and technical execution. I specialize in translating complex problems into clear specifications, managing product backlogs, and delivering user-centric solutions.',
+    title: 'Technical Business Analyst | PMO Governance Specialist',
+    bio: 'Technical Business Analyst with a Software Engineering foundation. Unlike traditional analysts who focus solely on documentation, I leverage my background in SQL, Code Tracing, and System Architecture to validate technical feasibility and troubleshoot complex integration issues. For the past 7 years, I have operated as the PMO Governance Lead (Second-in-Command) for a major enterprise, acting as the "Gatekeeper" for project initiation and ensuring ISO/IEC 27001 compliance.',
     location: 'Bangkok, Thailand',
-    email: 'waynemawoo.devs@gmail.com',
+    email: 'winmawoo89@gmail.com',
     phone: '+66 063 604 9124',
-    address: '32 Soi 50, Ramkhamhaeng Road, Hua Mak, Bang Kapi, Bangkok 10240',
-    linkedin: 'linkedin.com/in/win-maw-oo',
+    address: '38 Lat Phrao 94 Alley, Phlabphla, Wang Thonglang, Bangkok 10310',
+    linkedin: 'linkedin.com/in/win-maw-oo-33265560',
     github: 'github.com/MawGyi',
     status: 'Open to opportunities',
     statusType: 'available' as const,
@@ -17,7 +17,8 @@ export const profile = {
     socialLinks: [
         { platform: 'linkedin', url: 'https://www.linkedin.com/in/win-maw-oo-33265560/' },
         { platform: 'github', url: 'https://github.com/MawGyi' },
-        { platform: 'email', url: 'mailto:waynemawoo.devs@gmail.com' },
+        { platform: 'email', url: 'mailto:winmawoo89@gmail.com' },
+        { platform: 'website', url: 'https://wmoportfolio.vercel.app/' },
     ],
 }
 
@@ -25,150 +26,168 @@ export const projects = [
     {
         _id: '1',
         title: 'Enterprise Governance Platform',
-        description: 'Partnered with PMO leadership to analyze requirements for internal governance systems, improving compliance workflows by 40% and reducing reporting errors through better system design.',
-        tags: ['Business Analysis', 'Stakeholder Management', 'Process Design'],
+        description: 'Automated the project registration workflow, reducing manual data entry errors and ensuring 100% contract compliance. Resulted in 40% improvement in compliance workflows.',
+        tags: ['Business Analysis', 'Governance', 'Workflow Optimization'],
         featured: true,
     },
     {
         _id: '2',
-        title: 'DevOps Infrastructure Lab',
-        description: 'Built a complete CI/CD pipeline simulation as part of the "100 Days of DevOps" challenge. Automated infrastructure provisioning using Terraform and deployed containerized apps with Docker & Kubernetes.',
-        tags: ['DevOps', 'Terraform', 'Kubernetes', 'CI/CD'],
+        title: 'The Movie App (Architecture Demo)',
+        description: 'Native Android app using VIPER Architecture (View, Interactor, Presenter, Entity, Router). Demonstrates understanding of clean code, separation of concerns, and strict software engineering principles.',
+        tags: ['Kotlin', 'VIPER', 'MVP', 'RxJava', 'Dagger2'],
         featured: true,
+        link: 'https://github.com/MawGyi/The-Movie-App-MVP_VIPER',
     },
     {
         _id: '3',
-        title: 'ISO/IEC 27001 Compliance',
-        description: 'Drove ISO/IEC certification initiatives through gap analysis, process documentation, and cross-functional coordination.',
-        tags: ['ISO Standards', 'Documentation', 'Risk Management'],
-        featured: false,
+        title: 'SarPay (Web Application)',
+        description: 'Modern reading platform built with Next.js 15, Supabase, and Tailwind CSS. Features glassmorphism UI, real-time syncing, and custom typography for Burmese support.',
+        tags: ['Next.js 15', 'Supabase', 'Tailwind CSS 4'],
+        featured: true,
+        link: 'https://sarpay.vercel.app',
     },
     {
         _id: '4',
-        title: 'Retail Inventory System (Technical Prototype)',
-        description: 'Developed a functional inventory management application for a mini-store context. Designed the database schema and implemented core CRUD functionalities.',
-        tags: ['Software Development', 'SQL', 'Database Design'],
-        featured: false,
+        title: 'AI Resume Analyzer',
+        description: 'TypeScript project leveraging Google Gemini Pro to parse and analyze documents, showcasing interest in AI integration and LLM applications.',
+        tags: ['Google Gemini Pro', 'TypeScript', 'AI Integration'],
+        featured: true,
+        link: 'https://github.com/MawGyi/AI-Resume-Analyzer_build_geminipro2.5',
     },
     {
         _id: '5',
-        title: 'Mobile Application Development',
-        description: 'Developed functional prototypes including "The Movie App" (VIPER architecture) and "The Library App" using Kotlin to demonstrate mobile product understanding.',
-        tags: ['Mobile Dev', 'Kotlin', 'Product Prototyping'],
-        featured: false,
+        title: 'Personal Portfolio',
+        description: 'Dynamic content management and responsive design portfolio website.',
+        tags: ['Next.js', 'Sanity.io', 'Tailwind CSS'],
+        featured: true,
+        link: 'https://wmoportfolio.vercel.app',
     },
 ]
 
 export const experience = [
     {
-        company: 'ACE Data Systems',
-        role: 'Senior Business Analyst & Project Coordinator',
+        company: 'ACE Data Systems Ltd',
+        role: 'Senior Technical Business Analyst / PMO Operations Lead',
         startDate: '2017-10',
         endDate: '2024-10',
-        description: 'Collaborated with the PMO Manager to drive project governance and managed the product lifecycle for internal systems. Analyzed complex business requirements and translated them into clear functional specifications.',
+        description: 'Functioned as the Operational Lead (2nd-in-Charge) of the PMO, governing the project lifecycle for the entire organization while providing Tier 3 technical support for enterprise systems.',
         highlights: [
-            'Collaborated with the PMO Manager to drive project governance, managing end-to-end project intake and defining internal rules for operational efficiency.',
-            'Managed the product lifecycle for internal systems (ACE IS, Redmine, Bitrix24), acting as the primary liaison between end-users and the development team.',
-            'Analyzed and translated complex business requirements into clear project plans and functional specifications, facilitating project initiation in the backlog system.',
-            'Actively monitored project performance metrics (P&L, planned vs. actual effort), reporting findings to management to resolve risks and ensure timeline adherence.',
-            'Contributed to successful ISO/IEC 27001:2013 certification audits for the project management module.',
-            'Provided critical Tier 1 & 2 support, resolving complex data accuracy issues and report discrepancies.'
+            'Architected the "Project Registration" Protocol: Established strict validation rules for all new projects, personally reviewing and approving based on Commercial Terms, Costing Feasibility, and Contract Status.',
+            'ISO/IEC 27001 Compliance: Led internal audit preparation for Project Management modules. Governance frameworks reduced non-compliance findings and were pivotal in securing ISO certification.',
+            'Process Optimization: Redesigned the project intake workflow, resulting in a 40% improvement in processing efficiency and eliminating unauthorized ("ghost") projects.',
+            'Ecosystem Management: Managed real-time data flow between ACE Information System (ERP), NuLab Backlog, and Bitrix24 (CRM).',
+            'Technical Troubleshooting: Diagnosed data discrepancies by tracing API failures and logic errors between integrated systems to resolve "phantom" reporting issues.',
+            'Executive Intelligence: Designed high-level dashboards (Plan vs. Actual, P&L, Resource Overload) allowing Upper Management to identify at-risk projects.',
+            'Functional Support & Leadership: Provided Tier 2/3 Support for internal tools and acted as the primary bridge between Department Heads, Project Managers, and the Development Team.',
         ]
     },
     {
-        company: 'Myanmar Information Technology Pte Ltd',
-        role: 'Senior Developer & Functional Consultant',
+        company: 'Myanmar Information Technology Pte Ltd (MIT)',
+        role: 'System Support & Implementation Specialist (Software Engineer)',
         startDate: '2012-07',
         endDate: '2016-12',
-        description: 'Served as the dedicated on-site functional consultant for key enterprise clients, providing technical support for POS and ERP systems. Led system implementation and user training.',
+        description: 'Served as the dedicated On-Site Technical Consultant for City Mart Holding Co., Ltd. (Myanmar\'s largest retail chain), bridging the gap between business needs and technical development.',
         highlights: [
-            'Served as the dedicated on-site functional consultant for a key client (City Mart Holding), providing technical support for POS and ERP systems.',
-            'Resolved complex data discrepancies by leveraging advanced SQL queries and program tracing, reducing system downtime by 30%.',
-            'Led on-site system implementation and configuration for new branch openings, providing hands-on user training to ensure high adoption rates.',
-            'Managed data migration and integrity initiatives for system restorations, collaborating with end-users to validate and cleanse large datasets.'
+            'Advanced Incident Resolution: Utilized engineering background to trace C# and VB.NET source code to identify root causes of POS transaction errors during critical closings.',
+            'Database Integrity: Wrote complex SQL queries to verify and patch data inconsistencies in the ERP system, ensuring financial reporting accuracy.',
+            'Data Migration: Led data migration strategies for new branch openings, executing database cloning, cleansing, and validation to ensure 100% data accuracy.',
+            'Crisis Management: Acted as the sole on-site technical authority during server downtimes and system failures, managing stakeholder communication while coordinating technical fixes.',
+            'Managed the Full SDLC for change requests, from gathering new requirements to deploying patches and training users.',
         ]
     },
 ]
 
 export const skills = [
-    // Business Analysis (Mapped to Business & Methods)
-    { name: 'Requirement Elicitation', category: 'Business & Methods' as const },
-    { name: 'User Stories', category: 'Business & Methods' as const },
-    { name: 'Agile & Scrum', category: 'Business & Methods' as const },
-    { name: 'Stakeholder Management', category: 'Business & Methods' as const },
-    { name: 'ISO 27001 Audit', category: 'Business & Methods' as const },
-    { name: 'Process Modeling', category: 'Business & Methods' as const },
+    // Governance & Analysis
+    { name: 'ISO/IEC 27001 Audit', category: 'business' as const },
+    { name: 'Project Costing & P&L', category: 'business' as const },
+    { name: 'Requirement Elicitation', category: 'business' as const },
+    { name: 'Gap Analysis', category: 'business' as const },
+    { name: 'Process Re-engineering', category: 'business' as const },
+    { name: 'PMO Governance', category: 'business' as const },
 
-    // Development (Mapped to Technical Systems)
-    { name: 'C#', category: 'Technical Systems' as const },
-    { name: 'PHP', category: 'Technical Systems' as const },
-    { name: 'JavaScript', category: 'Technical Systems' as const },
-    { name: 'HTML/CSS', category: 'Technical Systems' as const },
-    { name: 'Kotlin (Android)', category: 'Technical Systems' as const },
-    { name: 'XML', category: 'Technical Systems' as const },
+    // Technical Core
+    { name: 'SQL (Advanced)', category: 'technical' as const },
+    { name: 'Code Tracing (C#/VB)', category: 'technical' as const },
+    { name: 'API Integration Logic', category: 'technical' as const },
+    { name: 'System Architecture', category: 'technical' as const },
+    { name: 'Next.js / React', category: 'technical' as const },
+    { name: 'Data Migration', category: 'technical' as const },
 
-    // Data & Databases (Mapped to Technical Systems)
-    { name: 'SQL Server', category: 'Technical Systems' as const },
-    { name: 'MySQL', category: 'Technical Systems' as const },
-    { name: 'PostgreSQL', category: 'Technical Systems' as const },
-    { name: 'SSRS', category: 'Technical Systems' as const },
-    { name: 'Data Migration', category: 'Technical Systems' as const },
-
-    // DevOps & Tools (Mapped to Tools)
-    { name: 'Docker', category: 'Tools' as const },
-    { name: 'Terraform', category: 'Tools' as const },
-    { name: 'Kubernetes', category: 'Tools' as const },
-    { name: 'Git', category: 'Tools' as const },
-    { name: 'Jira', category: 'Tools' as const },
-    { name: 'Redmine', category: 'Tools' as const },
-    { name: 'Bitrix24', category: 'Tools' as const },
+    // Tools & Platforms
+    { name: 'NuLab Backlog', category: 'tools' as const },
+    { name: 'Redmine (Admin)', category: 'tools' as const },
+    { name: 'Bitrix24 (CRM)', category: 'tools' as const },
+    { name: 'Jira', category: 'tools' as const },
+    { name: 'Docker', category: 'tools' as const },
+    { name: 'Git', category: 'tools' as const },
 ]
 
 export const achievements = [
     // Education
     {
         _id: 'edu1',
-        title: 'Bachelor of Science in Physics (B.Sc.)',
+        title: 'Bachelor of Science (Physics)',
         description: 'University of West Yangon',
         category: 'certification' as const,
+        date: '',
     },
     {
         _id: 'edu2',
-        title: 'A.G.T.I (EC), Electronics & Communications Engineering',
-        description: 'Technological University Hmawbi',
-        category: 'certification' as const,
-    },
-    {
-        _id: 'edu3',
         title: 'Level 5 Diploma in Computing',
         description: 'NCC Education',
         category: 'certification' as const,
+        date: '',
     },
     {
-        _id: 'edu4',
+        _id: 'edu3',
         title: 'Diploma in Software Engineering',
         description: 'Cambridge ICT for All (CICT)',
         category: 'certification' as const,
+        date: '',
     },
     // Certifications
     {
         _id: 'cert1',
-        title: 'KodeKloud Engineer - 100 Days of DevOps (Level 1)',
-        description: 'Comprehensive DevOps training',
+        title: '100 Days of DevOps (Level 1)',
+        description: 'KodeKloud (2025)',
         category: 'certification' as const,
-        date: '2025-12',
     },
     {
         _id: 'cert2',
-        title: 'KodeKloud Engineer - Docker & Git (Level 1)',
-        description: 'Containerization & Version Control',
+        title: 'Docker Level 1',
+        description: 'KodeKloud (2025)',
         category: 'certification' as const,
-        date: '2025-09',
     },
     {
         _id: 'cert3',
-        title: 'PADC-12 Android Full-Terms Course',
-        description: 'Mobile Development Foundation',
+        title: 'Git Level 1',
+        description: 'KodeKloud (2025)',
         category: 'certification' as const,
+    },
+    // Languages
+    {
+        _id: 'lang1',
+        title: 'English: Professional Working Proficiency',
+        description: 'Fluent',
+        category: 'milestone' as const,
+    },
+    {
+        _id: 'lang2',
+        title: 'Burmese: Native',
+        description: 'Native Speaker',
+        category: 'milestone' as const,
+    },
+    {
+        _id: 'lang3',
+        title: 'Japanese: Elementary',
+        description: 'Basic Proficiency',
+        category: 'milestone' as const,
+    },
+    {
+        _id: 'lang4',
+        title: 'Thai: Conversational',
+        description: 'Basic',
+        category: 'milestone' as const,
     },
 ]

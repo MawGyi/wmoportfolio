@@ -5,13 +5,15 @@ import { FileText } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { ResumePreviewModal } from './resume-preview-modal'
+import type { ResumeData } from '@/types/resume'
 
 interface ResumeDownloadProps {
   className?: string
   variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link'
+  resumeData?: ResumeData
 }
 
-export function ResumeDownload({ className, variant = 'outline' }: ResumeDownloadProps) {
+export function ResumeDownload({ className, variant = 'outline', resumeData }: ResumeDownloadProps) {
   const [isClient, setIsClient] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
 
@@ -53,7 +55,8 @@ export function ResumeDownload({ className, variant = 'outline' }: ResumeDownloa
 
       <ResumePreviewModal 
         isOpen={showPreview} 
-        onClose={() => setShowPreview(false)} 
+        onClose={() => setShowPreview(false)}
+        resumeData={resumeData}
       />
     </>
   )

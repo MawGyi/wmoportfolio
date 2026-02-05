@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Image, Font } from '@react-pdf/renderer'
-import { profile, experience, skills, achievements, projects } from '@/data/resume-data'
+import type { ResumeData } from '@/types/resume'
 
 // Register fonts
 Font.register({
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     fontSize: 9,
     lineHeight: 1.5,
     color: '#334155',
-    textAlign: 'justify',
   },
 
   // Skills
@@ -224,125 +223,191 @@ const styles = StyleSheet.create({
     fontSize: 8,
     color: '#94a3b8',
   },
+  languageRow: {
+    flexDirection: 'row',
+    borderTop: '1px solid #f1f5f9',
+    paddingTop: 6,
+    marginTop: 6,
+  },
+  languageLabel: {
+    width: 70,
+    fontSize: 9,
+    fontWeight: 700,
+    color: '#0f172a',
+  },
+  languageList: {
+    flex: 1,
+    fontSize: 8.5,
+    color: '#334155',
+    lineHeight: 1.4,
+  },
 })
 
-export const ResumePDF = () => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.name}>{profile.name}</Text>
-          <Text style={styles.title}>{profile.title}</Text>
-          
-          <View style={styles.contactRow}>
-            <View style={styles.contactItem}>
-               <Text style={styles.contactText}>{profile.email}</Text>
-            </View>
-            <View style={styles.contactItem}>
-               <Text style={styles.contactText}>{profile.phone}</Text>
-            </View>
-            <View style={styles.contactItem}>
-               <Text style={styles.contactText}>{profile.location}</Text>
-            </View>
-            <View style={styles.contactItem}>
-               <Text style={styles.contactText}>github.com/MawGyi</Text>
-            </View>
-             <View style={styles.contactItem}>
-               <Text style={styles.contactText}>linkedin.com/in/win-maw-oo</Text>
+type ResumePDFProps = {
+  data: ResumeData
+  profileImageUrl?: string
+}
+
+export const ResumePDF = ({ data, profileImageUrl }: ResumePDFProps) => {
+  const { profile, experience, skills, achievements, projects } = data
+  const linkedin = profile.linkedin?.replace(/^https?:\/\//, '')
+  const github = profile.github?.replace(/^https?:\/\//, '')
+
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <View style={styles.headerLeft}>
+            <Text style={styles.name}>{profile.name}</Text>
+            <Text style={styles.title}>{profile.title}</Text>
+
+            <View style={styles.contactRow}>
+              {profile.email && (
+                <View style={styles.contactItem}>
+                  <Text style={styles.contactText}>{profile.email}</Text>
+                </View>
+              )}
+              {profile.phone && (
+                <View style={styles.contactItem}>
+                  <Text style={styles.contactText}>{profile.phone}</Text>
+                </View>
+              )}
+              {profile.location && (
+                <View style={styles.contactItem}>
+                  <Text style={styles.contactText}>{profile.location}</Text>
+                </View>
+              )}
+              {github && (
+                <View style={styles.contactItem}>
+                  <Text style={styles.contactText}>{github}</Text>
+                </View>
+              )}
+              {linkedin && (
+                <View style={styles.contactItem}>
+                  <Text style={styles.contactText}>{linkedin}</Text>
+                </View>
+              )}
             </View>
           </View>
+
+          {/* Photo (Optional/Small) */}
+          {profileImageUrl && (
+            // eslint-disable-next-line jsx-a11y/alt-text
+            <Image src={profileImageUrl} style={styles.headerPhoto} />
+          )}
         </View>
-        
-        {/* Photo (Optional/Small) */}
-        {/* eslint-disable-next-line jsx-a11y/alt-text */}
-        <Image 
-            src="/profile.jpg"
-            style={styles.headerPhoto} 
-        />
-      </View>
 
-      {/* Summary */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Professional Summary</Text>
-        <Text style={styles.summaryText}>{profile.bio}</Text>
-      </View>
+        {/* Summary */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Professional Summary</Text>
+          <Text style={styles.summaryText}>{profile.bio}</Text>
+        </View>
 
-      {/* Skills */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Technical Skills</Text>
-        {['Business & Methods', 'Technical Systems', 'Tools'].map(category => {
-            const categorySkills = skills.filter(s => s.category === category)
+        {/* Skills */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Technical Skills</Text>
+          {[
+            { key: 'business', label: 'Business & Methods' },
+            { key: 'technical', label: 'Technical Systems' },
+            { key: 'tools', label: 'Tools' },
+          ].map((category) => {
+            const categorySkills = skills.filter((s) => s.category === category.key)
             if (categorySkills.length === 0) return null
             return (
-              <View key={category} style={styles.skillRow} wrap={false}>
-                <Text style={styles.skillCategory}>{category}:</Text>
+              <View key={category.key} style={styles.skillRow} wrap={false}>
+                <Text style={styles.skillCategory}>{category.label}:</Text>
                 <Text style={styles.skillList}>
-                  {categorySkills.map(s => s.name).join(', ')}
+                  {categorySkills.map((s) => s.name).join(', ')}
                 </Text>
               </View>
             )
-        })}
-      </View>
+          })}
+        </View>
 
-      {/* Experience */}
-      <View style={{ ...styles.section, flex: 1 }}>
-         <Text style={styles.sectionTitle}>Work Experience</Text>
-         {experience.map((job, idx) => (
+        {/* Experience */}
+        <View style={{ ...styles.section, flex: 1 }}>
+          <Text style={styles.sectionTitle}>Work Experience</Text>
+          {experience.map((job, idx) => (
             <View key={idx} style={styles.jobContainer} wrap={false}>
               <View style={styles.jobHeader}>
                 <Text style={styles.companyName}>{job.company}</Text>
-                <Text style={styles.jobDate}>{job.startDate} — {job.endDate}</Text>
+                <Text style={styles.jobDate}>
+                  {job.startDate} — {job.current ? 'Present' : job.endDate}
+                </Text>
               </View>
               <Text style={styles.jobRole}>{job.role}</Text>
               <Text style={styles.jobDescription}>{job.description}</Text>
-              
+
               <View>
-                {job.highlights && job.highlights.slice(0, 3).map((highlight, hIdx) => (
-                  <View key={hIdx} style={styles.bulletPoint}>
-                    <View style={styles.bulletDot} />
-                    <Text style={styles.bulletText}>{highlight}</Text>
-                  </View>
-                ))}
+                {job.highlights &&
+                  job.highlights.slice(0, 3).map((highlight, hIdx) => (
+                    <View key={hIdx} style={styles.bulletPoint}>
+                      <View style={styles.bulletDot} />
+                      <Text style={styles.bulletText}>{highlight}</Text>
+                    </View>
+                  ))}
               </View>
             </View>
-         ))}
-      </View>
+          ))}
+        </View>
 
-      {/* Projects */}
-      <View style={styles.section} wrap={false}>
+        {/* Projects */}
+        <View style={styles.section} wrap={false}>
           <Text style={styles.sectionTitle}>Key Projects</Text>
-           {projects.filter(p => p.featured).slice(0, 2).map((project) => (
+          {projects
+            .filter((project) => project.featured)
+            .slice(0, 2)
+            .map((project) => (
               <View key={project.title} style={styles.projectContainer}>
-                 <View style={styles.projectHeader}>
-                    <Text style={styles.projectTitle}>{project.title}</Text>
-                    <View style={styles.projectTags}>
-                       {project.tags.slice(0, 3).map(tag => (
-                         <Text key={tag} style={styles.projectTag}>{tag}</Text>
-                       ))}
-                    </View>
-                 </View>
-                 <Text style={styles.projectDesc}>{project.description}</Text>
+                <View style={styles.projectHeader}>
+                  <Text style={styles.projectTitle}>{project.title}</Text>
+                  <View style={styles.projectTags}>
+                    {(project.tags ?? []).slice(0, 3).map((tag) => (
+                      <Text key={tag} style={styles.projectTag}>
+                        {tag}
+                      </Text>
+                    ))}
+                  </View>
+                </View>
+                <Text style={styles.projectDesc}>{project.description}</Text>
               </View>
             ))}
-      </View>
+        </View>
 
-      {/* Education */}
-      <View style={styles.section} wrap={false}>
-         <Text style={styles.sectionTitle}>Education</Text>
-         {achievements.filter(a => a.category === 'certification').slice(0, 3).map((edu, i) => (
-           <View key={i} style={styles.eduRow}>
-             <View style={styles.eduMain}>
-               <Text style={styles.eduTitle}>{edu.title}</Text>
-               <Text style={styles.eduPipe}>|</Text>
-               <Text style={styles.eduDesc}>{edu.description}</Text>
-             </View>
-             {edu.date && <Text style={styles.eduDate}>{edu.date}</Text>}
-           </View>
-         ))}
-      </View>
+        {/* Education */}
+        <View style={styles.section} wrap={false}>
+          <Text style={styles.sectionTitle}>Education & Certifications</Text>
+          {achievements
+            .filter((item) => item.category === 'certification')
+            .slice(0, 3)
+            .map((edu, i) => (
+              <View key={i} style={styles.eduRow}>
+                <View style={styles.eduMain}>
+                  <Text style={styles.eduTitle}>{edu.title}</Text>
+                  <Text style={styles.eduPipe}>|</Text>
+                  <Text style={styles.eduDesc}>{edu.description}</Text>
+                </View>
+                {edu.date && <Text style={styles.eduDate}>{edu.date}</Text>}
+              </View>
+            ))}
 
-    </Page>
-  </Document>
-)
+          {achievements.some((item) => item.category === 'milestone') && (
+            <View style={styles.languageRow}>
+              <Text style={styles.languageLabel}>Languages:</Text>
+              <Text style={styles.languageList}>
+                {achievements
+                  .filter((item) => item.category === 'milestone')
+                  .map((lang) => {
+                    const label = lang.title.split(':')[0]
+                    return `${label}${lang.description ? ` (${lang.description})` : ''}`
+                  })
+                  .join(', ')}
+              </Text>
+            </View>
+          )}
+        </View>
+      </Page>
+    </Document>
+  )
+}

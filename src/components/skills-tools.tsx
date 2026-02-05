@@ -1,6 +1,9 @@
 'use client'
 
-import { Briefcase, Database, Wrench } from 'lucide-react'
+import { useState } from 'react'
+import { Briefcase, Database, Wrench, Layers } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { cn } from '@/lib/utils'
 
 interface Skill {
   name: string
@@ -12,120 +15,102 @@ interface SkillsToolsProps {
 }
 
 const categoryConfig = {
+  all: {
+    icon: Layers,
+    label: 'All Skills',
+    color: 'text-foreground',
+    bgColor: 'bg-foreground/5',
+  },
   business: {
     icon: Briefcase,
     label: 'Business & Methods',
     color: 'text-blue-500',
     bgColor: 'bg-blue-500/10',
-    borderColor: 'border-blue-500/20',
   },
   technical: {
     icon: Database,
     label: 'Technical Systems',
     color: 'text-emerald-500',
     bgColor: 'bg-emerald-500/10',
-    borderColor: 'border-emerald-500/20',
   },
   tools: {
     icon: Wrench,
     label: 'Tools',
     color: 'text-violet-500',
     bgColor: 'bg-violet-500/10',
-    borderColor: 'border-violet-500/20',
   },
 }
 
 const defaultSkills: Skill[] = [
-  // Business & Methods (combines Business Analysis + Methodologies)
   { name: 'IT Business Analysis', category: 'business' },
   { name: 'Requirement Elicitation', category: 'business' },
-  { name: 'Stakeholder Management', category: 'business' },
-  { name: 'Process Mapping', category: 'business' },
-  { name: 'User Stories', category: 'business' },
-  { name: 'Agile & Scrum', category: 'business' },
-  { name: 'ISO 27001', category: 'business' },
-  // Technical Systems
   { name: 'SQL Server', category: 'technical' },
-  { name: 'ERP Systems', category: 'technical' },
-  { name: 'POS Systems', category: 'technical' },
-  { name: 'Data Migration', category: 'technical' },
-  // Tools
   { name: 'JIRA', category: 'tools' },
-  { name: 'Redmine', category: 'tools' },
-  { name: 'Bitrix24', category: 'tools' },
 ]
 
-function SkillCategory({ category, skills }: { category: string; skills: Skill[] }) {
-  const config = categoryConfig[category as keyof typeof categoryConfig]
-  if (!config) return null
-  
-  const Icon = config.icon
-  
-  return (
-    <div
-      className={`
-        group p-5 rounded-xl border transition-all duration-300
-        bg-card hover:bg-card/80
-        ${config.borderColor} hover:border-primary/30
-        hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5
-      `}
-    >
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-4">
-        <span className={`
-          p-2 rounded-lg ${config.bgColor} ${config.color}
-        `}>
-          <Icon className="w-4 h-4" />
-        </span>
-        <div>
-          <h3 className="text-title text-foreground group-hover:text-primary transition-colors">
-            {config.label}
-          </h3>
-          <span className="text-micro text-muted-foreground font-mono">
-            {skills.length} skills
-          </span>
-        </div>
-      </div>
-      
-      {/* Skills as tags */}
-      <div className="flex flex-wrap gap-2">
-        {skills.map((skill) => (
-          <span
-            key={skill.name}
-            className="text-micro px-2.5 py-1.5 rounded-md bg-muted/50 text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors duration-200"
-          >
-            {skill.name}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 export function SkillsTools({ skills = defaultSkills }: SkillsToolsProps) {
-  // Group skills by category
-  const groupedSkills = skills.reduce((acc, skill) => {
-    if (!acc[skill.category]) acc[skill.category] = []
-    acc[skill.category].push(skill)
-    return acc
-  }, {} as Record<string, Skill[]>)
+  const [activeTab, setActiveTab] = useState<'all' | 'business' | 'technical' | 'tools'>('all')
 
-  const categoryOrder = ['business', 'technical', 'tools']
-  const sortedCategories = categoryOrder.filter(cat => groupedSkills[cat])
+  const filteredSkills = activeTab === 'all' 
+    ? skills 
+    : skills.filter(skill => skill.category === activeTab)
 
   return (
     <section className="py-16">
-      <h2 className="section-heading">Technical Skills</h2>
+      <h2 className="section-heading mb-8">Technical Skills</h2>
       
-      <div className="grid gap-4 sm:grid-cols-3">
-        {sortedCategories.map((category) => (
-          <SkillCategory
-            key={category}
-            category={category}
-            skills={groupedSkills[category]}
-          />
-        ))}
+      {/* Tabs */}
+      <div className="flex flex-wrap gap-2 mb-8 justify-center sm:justify-start">
+        {(Object.keys(categoryConfig) as Array<keyof typeof categoryConfig>).map((key) => {
+          const config = categoryConfig[key]
+          const Icon = config.icon
+          const isActive = activeTab === key
+          
+          return (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={cn(
+                "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border",
+                isActive 
+                  ? cn("border-transparent ring-2 ring-offset-2 ring-offset-background", config.bgColor, config.color, "ring-current/20")
+                  : "bg-muted/30 border-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+            >
+              <Icon className="w-4 h-4" />
+              {config.label}
+            </button>
+          )
+        })}
       </div>
+
+      {/* Skills Grid */}
+      <motion.div 
+        layout
+        className="flex flex-wrap gap-2"
+      >
+        <AnimatePresence mode='popLayout'>
+          {filteredSkills.map((skill) => (
+            <motion.span
+              layout
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2 }}
+              key={skill.name}
+              className={cn(
+                "text-[13px] px-3 py-1.5 rounded-lg border border-border/40 font-medium transition-colors cursor-default",
+                // Dynamic colors based on category
+                skill.category === 'business' && "bg-blue-500/5 text-blue-600 dark:text-blue-400 hover:bg-blue-500/10 hover:border-blue-500/20",
+                skill.category === 'technical' && "bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500/20",
+                skill.category === 'tools' && "bg-violet-500/5 text-violet-600 dark:text-violet-400 hover:bg-violet-500/10 hover:border-violet-500/20"
+              )}
+            >
+              {skill.name}
+            </motion.span>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </section>
   )
 }
